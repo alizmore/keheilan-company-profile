@@ -2,60 +2,51 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const NeuralMesh = () => {
-  const nodes = Array.from({ length: 20 }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 2,
-    duration: Math.random() * 5 + 5,
-    delay: Math.random() * 5
-  }));
-
   return (
-    <div className="neural-background">
-      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-        {/* Connections */}
-        {nodes.map((node, i) => (
-          nodes.slice(i + 1, i + 4).map((target, j) => (
-            <motion.line
-              key={`line-${i}-${j}`}
-              x1={node.x}
-              y1={node.y}
-              x2={target.x}
-              y2={target.y}
-              stroke="#ffce7b"
-              strokeWidth="0.05"
-              strokeOpacity="0.2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.2, 0] }}
-              transition={{
-                duration: Math.random() * 3 + 2,
-                repeat: Infinity,
-                delay: Math.random() * 5
-              }}
+    <div className="neural-mesh">
+      <svg width="100%" height="100%" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="meshGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+            <stop offset="0%" stopColor="#ffce7b" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#ffce7b" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        
+        <motion.g 
+          animate={{ x: [0, 5, 0], y: [0, -5, 0] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        >
+          {/* Nodes and Connections */}
+          <line x1="200" y1="200" x2="400" y2="150" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          <line x1="400" y1="150" x2="600" y2="300" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          <line x1="600" y1="300" x2="350" y2="450" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          <line x1="350" y1="450" x2="200" y2="200" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          
+          <line x1="1000" y1="100" x2="1300" y2="200" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          <line x1="1300" y1="200" x2="1150" y2="400" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          <line x1="1150" y1="400" x2="1000" y2="100" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          
+          <line x1="100" y1="700" x2="400" y2="800" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          <line x1="400" y1="800" x2="250" y2="600" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          <line x1="250" y1="600" x2="100" y2="700" stroke="#ffce7b" strokeWidth="0.5" strokeOpacity="0.2" />
+          
+          {/* Pulsing Nodes */}
+          {[
+            {x: 200, y: 200}, {x: 400, y: 150}, {x: 600, y: 300}, {x: 350, y: 450},
+            {x: 1000, y: 100}, {x: 1300, y: 200}, {x: 1150, y: 400},
+            {x: 100, y: 700}, {x: 400, y: 800}, {x: 250, y: 600}
+          ].map((node, i) => (
+            <motion.circle
+              key={i}
+              cx={node.x}
+              cy={node.y}
+              r="3"
+              fill="#ffce7b"
+              animate={{ opacity: [0.3, 0.7, 0.3], r: [2, 3, 2] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
             />
-          ))
-        ))}
-        {/* Nodes */}
-        {nodes.map((node) => (
-          <motion.circle
-            key={node.id}
-            cx={node.x}
-            cy={node.y}
-            r={node.size / 10}
-            fill="#ffce7b"
-            initial={{ opacity: 0.1 }}
-            animate={{ 
-              opacity: [0.1, 0.6, 0.1],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{
-              duration: node.duration,
-              repeat: Infinity,
-              delay: node.delay
-            }}
-          />
-        ))}
+          ))}
+        </motion.g>
       </svg>
     </div>
   );
