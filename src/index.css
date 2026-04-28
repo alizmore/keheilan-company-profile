@@ -639,8 +639,13 @@ input[type="range"]::-webkit-slider-thumb {
     overflow: hidden;
   }
 
+  /* ── Kill the dark vignette pseudo-elements — they render as a solid black box on iOS Safari ── */
+  .slide-container::after,
+  .slide-container::before { display: none; }
+
   /* ── Slide wrapper: scrollable, momentum scrolling on iOS ── */
   .slide-content-wrapper {
+    z-index: 10;
     position: absolute;
     inset: 0;
     padding: 72px 16px 110px;
