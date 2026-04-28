@@ -9,6 +9,32 @@ import {
 } from 'lucide-react';
 import heroPng from './assets/hero.png';
 
+// Touch swipe hook
+function useSwipe(onLeft, onRight) {
+  const touchStartX = useRef(null);
+  const touchStartY = useRef(null);
+
+  const onTouchStart = useCallback((e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const onTouchEnd = useCallback((e) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    const dy = e.changedTouches[0].clientY - touchStartY.current;
+    // Only trigger if horizontal swipe dominates (prevent triggering on scroll)
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+      if (dx < 0) onLeft();   // swipe left → next slide
+      else onRight();          // swipe right → prev slide
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  }, [onLeft, onRight]);
+
+  return { onTouchStart, onTouchEnd };
+}
+
 // Module-level navigate ref so slide JSX can trigger navigation
 const navigateRef = { fn: () => {} };
 
@@ -803,6 +829,7 @@ function App() {
   const nextSlide = useCallback(() => setCurrentSlide((p) => (p + 1) % slides.length), []);
   const prevSlide = useCallback(() => setCurrentSlide((p) => (p - 1 + slides.length) % slides.length), []);
 
+  // Keyboard nav
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
@@ -812,8 +839,15 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
+  // Swipe nav
+  const { onTouchStart, onTouchEnd } = useSwipe(nextSlide, prevSlide);
+
   return (
-    <div className="slide-container">
+    <div
+      className="slide-container"
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+    >
       <NeuralMesh />
 
       <div className="persistent-logo">
@@ -826,7 +860,7 @@ function App() {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+          transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
           className="slide-content-wrapper"
         >
           {slides[currentSlide].content}
@@ -838,10 +872,20 @@ function App() {
         {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
       </div>
 
-      {/* Confidential footer */}
+      {/* Confidential footer — hidden on mobile via CSS */}
       <div style={{ position: 'fixed', bottom: '32px', left: '44px', display: 'flex', flexDirection: 'column', gap: '3px', opacity: 0.5, zIndex: 100, pointerEvents: 'none' }}>
         <span style={{ fontSize: '9px', fontWeight: '600', letterSpacing: '0.18em', textTransform: 'uppercase' }}>PRIVATE & CONFIDENTIAL</span>
         <span style={{ fontSize: '8.5px', fontWeight: '300', letterSpacing: '0.08em' }}>AFM REGISTERED · NETHERLANDS</span>
+      </div>
+
+      {/* Mobile swipe nav buttons */}
+      <div className="mobile-nav">
+        <button onClick={prevSlide} aria-label="Previous slide">
+          <ChevronLeft size={18} /> PREV
+        </button>
+        <button onClick={nextSlide} aria-label="Next slide">
+          NEXT <ChevronRight size={18} />
+        </button>
       </div>
     </div>
   );

@@ -617,74 +617,128 @@ input[type="range"]::-webkit-slider-thumb {
 .max-w-6xl { max-width: 1152px; }
 .flex-wrap { flex-wrap: wrap; }
 
+/* ═══ MOBILE SWIPE NAV BUTTONS ═══ */
+.mobile-nav {
+  display: none;
+}
+
 /* ═══ MOBILE ═══ */
 @media (max-width: 768px) {
-  body { overflow-y: auto; height: auto; min-height: 100vh; }
-
-  .slide-container {
-    background: linear-gradient(180deg, var(--black) 0%, var(--firm-1) 100%);
-    height: auto;
-    min-height: 100vh;
-    overflow-x: hidden;
+  /* ── Root scroll fix ── */
+  html, body {
+    overflow: hidden;       /* keep the viewport locked */
+    height: 100%;
+    width: 100%;
+    position: fixed;        /* prevents iOS safari bounce from hijacking scroll */
   }
 
+  /* ── Slide container: full screen, no overflow ── */
+  .slide-container {
+    background: linear-gradient(180deg, var(--black) 0%, var(--firm-1) 100%);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* ── Slide wrapper: scrollable inner area ──
+     Keep position:absolute so AnimatePresence transitions still work.
+     Give it overflow-y:auto + the iOS momentum flag so CONTENT inside can scroll. */
   .slide-content-wrapper {
-    position: relative;
-    padding: 70px 16px 90px;
-    min-height: 100vh;
+    position: absolute;
+    inset: 0;
+    padding: 72px 16px 110px;   /* extra bottom for swipe buttons */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;  /* stop scroll escaping to parent */
     align-items: flex-start;
   }
 
-  /* Typography */
-  .slide-title { font-size: 26px; line-height: 1.2; }
-  .slide-lead { font-size: 14px; }
-  .eyebrow { font-size: 10px; }
+  /* ── Typography ── */
+  .slide-title { font-size: 24px; line-height: 1.2; }
+  .slide-lead  { font-size: 14px; }
+  .eyebrow     { font-size: 10px; }
 
-  /* Cover */
-  .cover-content { padding: 28px 18px; border-radius: 20px; }
-  .cover-content img { height: 90px !important; }
+  /* ── Cover ── */
+  .cover-content { padding: 28px 16px !important; border-radius: 20px; }
+  .cover-content img { height: 80px !important; }
 
-  /* Grids */
+  /* ── Grids ── */
   .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 12px; }
-  .grid-4-2 { grid-template-columns: 1fr 1fr; }
+  .grid-4-2        { grid-template-columns: 1fr 1fr; gap: 12px; }
 
-  /* Pipeline (5-col) → 2-col on mobile */
-  .pipeline {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-  .pipeline-connector { display: none !important; }
+  /* ── Pipeline (5-col → 2-col) ── */
+  .pipeline { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
 
-  /* Performance section */
-  .perf-flex { flex-direction: column !important; }
+  /* ── Performance ── */
+  .perf-flex        { flex-direction: column !important; }
   .perf-chart-panel { flex: none !important; }
   .perf-metrics-grid { grid-template-columns: 1fr 1fr !important; }
 
-  /* Holdings */
-  .holdings-flex { flex-direction: column !important; gap: 20px !important; }
+  /* ── Holdings ── */
+  .holdings-flex    { flex-direction: column !important; gap: 20px !important; }
   .holdings-donut-col { flex: none !important; width: 100% !important; }
 
-  /* Heatmap */
+  /* ── Heatmap ── */
   .heatmap-cells { flex-wrap: wrap; }
   .hm-cell { min-width: calc(25% - 7px); height: 44px; }
-  .hm-val { font-size: 11px; }
+  .hm-val  { font-size: 11px; }
 
-  /* Simulator */
+  /* ── Simulator ── */
   .sim-wrapper { padding: 0 !important; }
 
-  /* Logo */
-  .persistent-logo img { height: 40px !important; }
-  .persistent-logo { top: 16px; left: 16px; }
+  /* ── Logo ── */
+  .persistent-logo { top: 14px; left: 14px; }
+  .persistent-logo img { height: 42px !important; }
 
-  /* Nav buttons */
-  .nav-btn { width: 40px !important; height: 40px !important; }
+  /* ── Faceoff table ── */
+  table td, table th { font-size: 11px !important; padding: 10px 8px !important; }
 
-  /* Faceoff table */
-  .faceoff-table td, .faceoff-table th { font-size: 11px !important; padding: 10px 10px !important; }
-
-  /* Max-width containers */
+  /* ── Max-width containers ── */
   .max-w-5xl, .max-w-6xl { width: 100%; }
 
-  /* Slide counter */
-  .slide-counter { right: 60px !important; }
+  /* ── Slide counter ── */
+  .slide-counter { bottom: 70px !important; right: 50% !important; transform: translateX(50%); }
+
+  /* ── Confidential footer: hide on mobile to save space ── */
+  .slide-container > div:last-of-type { display: none; }
+
+  /* ── Mobile swipe nav: show the touch buttons ── */
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    gap: 16px;
+    z-index: 300;
+    padding: 0 24px;
+  }
+
+  .mobile-nav button {
+    flex: 1;
+    max-width: 160px;
+    height: 48px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,206,123,0.35);
+    background: rgba(0,0,0,0.65);
+    color: #ffce7b;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-nav button:active {
+    background: rgba(255,206,123,0.15);
+  }
 }
