@@ -9,30 +9,40 @@ import {
 } from 'lucide-react';
 import heroPng from './assets/hero.png';
 
-// Touch swipe hook
-function useSwipe(onLeft, onRight) {
+// Touch swipe — registered with passive:true so scroll is NEVER blocked
+function useSwipe(containerRef, onLeft, onRight) {
   const touchStartX = useRef(null);
   const touchStartY = useRef(null);
 
-  const onTouchStart = useCallback((e) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchStartY.current = e.touches[0].clientY;
-  }, []);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
 
-  const onTouchEnd = useCallback((e) => {
-    if (touchStartX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    const dy = e.changedTouches[0].clientY - touchStartY.current;
-    // Only trigger if horizontal swipe dominates (prevent triggering on scroll)
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-      if (dx < 0) onLeft();   // swipe left → next slide
-      else onRight();          // swipe right → prev slide
-    }
-    touchStartX.current = null;
-    touchStartY.current = null;
-  }, [onLeft, onRight]);
+    const onTouchStart = (e) => {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
+    };
 
-  return { onTouchStart, onTouchEnd };
+    const onTouchEnd = (e) => {
+      if (touchStartX.current === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX.current;
+      const dy = e.changedTouches[0].clientY - touchStartY.current;
+      // Only treat as slide-nav if clearly horizontal
+      if (Math.abs(dx) > Math.abs(dy) * 1.5 && Math.abs(dx) > 60) {
+        if (dx < 0) onLeft();
+        else onRight();
+      }
+      touchStartX.current = null;
+      touchStartY.current = null;
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: true });
+    el.addEventListener('touchend',   onTouchEnd,   { passive: true });
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart);
+      el.removeEventListener('touchend',   onTouchEnd);
+    };
+  }, [containerRef, onLeft, onRight]);
 }
 
 // Module-level navigate ref so slide JSX can trigger navigation
@@ -822,6 +832,7 @@ const slides = [
 // ─── App ─────────────────────────────────────────────────────────────────────
 function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const containerRef = useRef(null);
 
   // Wire navigate ref so slide JSX can call it
   navigateRef.fn = setCurrentSlide;
@@ -839,15 +850,11 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
-  // Swipe nav
-  const { onTouchStart, onTouchEnd } = useSwipe(nextSlide, prevSlide);
+  // Swipe nav — passive listeners, won't block content scroll
+  useSwipe(containerRef, nextSlide, prevSlide);
 
   return (
-    <div
-      className="slide-container"
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
+    <div ref={containerRef} className="slide-container">
       <NeuralMesh />
 
       <div className="persistent-logo">

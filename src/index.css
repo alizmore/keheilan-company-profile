@@ -624,32 +624,30 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ═══ MOBILE ═══ */
 @media (max-width: 768px) {
-  /* ── Root scroll fix ── */
+  /* ── Root: simple lock, no position:fixed (causes grey box on iOS) ── */
   html, body {
-    overflow: hidden;       /* keep the viewport locked */
+    overflow: hidden;
     height: 100%;
     width: 100%;
-    position: fixed;        /* prevents iOS safari bounce from hijacking scroll */
   }
 
-  /* ── Slide container: full screen, no overflow ── */
+  /* ── Slide container ── */
   .slide-container {
     background: linear-gradient(180deg, var(--black) 0%, var(--firm-1) 100%);
     height: 100%;
+    width: 100%;
     overflow: hidden;
   }
 
-  /* ── Slide wrapper: scrollable inner area ──
-     Keep position:absolute so AnimatePresence transitions still work.
-     Give it overflow-y:auto + the iOS momentum flag so CONTENT inside can scroll. */
+  /* ── Slide wrapper: scrollable, momentum scrolling on iOS ── */
   .slide-content-wrapper {
     position: absolute;
     inset: 0;
-    padding: 72px 16px 110px;   /* extra bottom for swipe buttons */
-    overflow-y: auto;
+    padding: 72px 16px 110px;
+    overflow-y: scroll;          /* 'scroll' (not 'auto') forces iOS to honour it */
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;  /* stop scroll escaping to parent */
+    overscroll-behavior-y: contain;
     align-items: flex-start;
   }
 
