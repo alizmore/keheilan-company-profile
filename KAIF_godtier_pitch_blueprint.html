@@ -1,0 +1,997 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --firm-1:#055a57;--firm-2:#00917c;--firm-3:#ffce7b;
+    --firm-4:#24a18f;--firm-5:#49b0a1;--firm-6:#92d0c7;
+    --black:#000000;--white:#ffffff;
+    --ink:var(--color-text-primary);--muted:var(--color-text-secondary);
+    --surf:var(--color-background-primary);--surf2:var(--color-background-secondary);
+    --brd:var(--color-border-tertiary);
+  }
+  body{font-family:'Montserrat',sans-serif;font-size:14px;color:var(--ink);background:transparent}
+
+  /* ── Hero ── */
+  .hero{padding:2.5rem 0 2rem;border-bottom:0.5px solid var(--brd)}
+  .hero-eyebrow{font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+  .hero-title{font-family:'Montserrat',sans-serif;font-size:28px;font-weight:700;line-height:1.2;margin-bottom:0.4rem}
+  .hero-title span{color:#ffce7b}
+  .hero-sub{font-size:13px;color:var(--muted);max-width:580px;line-height:1.6}
+  .badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:12px;background:rgba(255,206,123,0.15);color:#633806;margin-right:6px;margin-top:8px}
+  .badge.teal{background:rgba(5,90,87,0.12);color:#055a57}
+
+  /* ── Section ── */
+  .section-wrap{padding:2rem 0;border-bottom:0.5px solid var(--brd)}
+  .sec-num{font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:#ffce7b;font-weight:600;margin-bottom:0.3rem}
+  .sec-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:700;margin-bottom:1rem}
+  .sec-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:1rem}
+
+  /* ── Color Palette ── */
+  .palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:1rem 0}
+  .palette-swatch{border-radius:10px;padding:1rem;border:0.5px solid var(--brd);text-align:center}
+  .swatch-block{width:100%;height:56px;border-radius:8px;margin-bottom:8px;border:1px solid rgba(0,0,0,0.08)}
+  .swatch-name{font-size:11px;font-weight:600;margin-bottom:2px}
+  .swatch-hex{font-size:10px;color:var(--muted);font-family:monospace}
+  .swatch-use{font-size:9px;color:var(--muted);margin-top:4px;line-height:1.4}
+
+  /* ── Typography Tokens ── */
+  .typo-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:12px}
+  .typo-table th{text-align:left;padding:8px 12px;font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);border-bottom:1px solid var(--brd);font-weight:500}
+  .typo-table td{padding:8px 12px;border-bottom:0.5px solid var(--brd);vertical-align:top}
+  .typo-table td:first-child{font-weight:600;color:#055a57;white-space:nowrap}
+
+  /* ── Data Cards ── */
+  .data-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:1rem 0}
+  .data-card{background:var(--surf);border:0.5px solid var(--brd);border-radius:10px;padding:1rem}
+  .data-card-label{font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:4px;font-weight:500}
+  .data-card-value{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:2px}
+  .data-card-sub{font-size:11px;color:var(--muted);line-height:1.4}
+
+  /* ── Narrative arc ── */
+  .arc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;position:relative;margin:1.5rem 0}
+  .arc-step{padding:1rem 0.75rem;border:0.5px solid var(--brd);border-right:none;position:relative}
+  .arc-step:last-child{border-right:0.5px solid var(--brd)}
+  .arc-step:first-child{border-radius:8px 0 0 8px}
+  .arc-step:last-child{border-radius:0 8px 8px 0}
+  .arc-num{font-size:10px;font-weight:600;color:#ffce7b;margin-bottom:4px;letter-spacing:0.1em}
+  .arc-act{font-size:12px;font-weight:600;margin-bottom:6px}
+  .arc-desc{font-size:11px;color:var(--muted);line-height:1.5}
+  .arc-arrow{position:absolute;right:-10px;top:50%;transform:translateY(-50%);width:18px;height:18px;background:var(--surf);border:0.5px solid var(--brd);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:2;font-size:10px;color:#ffce7b}
+
+  /* ── Slide deck ── */
+  .slide-list{display:flex;flex-direction:column;gap:12px;margin-top:1rem}
+  .slide-card{background:var(--surf);border:0.5px solid var(--brd);border-radius:10px;overflow:hidden}
+  .slide-header{display:flex;align-items:center;gap:12px;padding:0.85rem 1rem;cursor:pointer;user-select:none}
+  .slide-n{width:28px;height:28px;border-radius:6px;background:rgba(255,206,123,0.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#633806;flex-shrink:0}
+  .slide-hook{font-size:13px;font-weight:600;flex:1}
+  .slide-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:rgba(5,90,87,0.1);color:#055a57;flex-shrink:0}
+  .slide-body{padding:0 1rem 1rem;display:none;border-top:0.5px solid var(--brd);padding-top:0.85rem}
+  .slide-body.open{display:block}
+  .slide-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:0.5rem}
+  .slide-col h4{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#ffce7b;margin-bottom:6px;font-weight:600}
+  .slide-col ul{list-style:none;padding:0}
+  .slide-col ul li{font-size:12px;color:var(--muted);padding:2px 0;line-height:1.5;padding-left:10px;position:relative}
+  .slide-col ul li::before{content:"—";position:absolute;left:0;color:var(--brd)}
+  .psych-box{background:rgba(5,90,87,0.08);border-radius:6px;padding:8px 10px;font-size:12px;color:#055a57;line-height:1.5;margin-top:8px}
+  .psych-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px}
+
+  /* ── Holdings / Data Tables ── */
+  .holdings-table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:12px}
+  .holdings-table th{text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);border-bottom:1px solid var(--brd);font-weight:500}
+  .holdings-table td{padding:6px 10px;border-bottom:0.5px solid var(--brd)}
+  .holdings-table td:last-child{text-align:right;font-weight:600;color:#055a57}
+
+  /* ── Risk Face-Off ── */
+  .faceoff-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin:1rem 0;border:0.5px solid var(--brd);border-radius:10px;overflow:hidden}
+  .faceoff-cell{padding:10px 14px;border-bottom:0.5px solid var(--brd);font-size:12px}
+  .faceoff-cell:nth-child(3n+1){font-weight:500;background:var(--surf)}
+  .faceoff-cell:nth-child(3n+2){text-align:center;font-weight:700;color:#055a57}
+  .faceoff-cell:nth-child(3n){text-align:center;color:var(--muted)}
+  .faceoff-header{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:10px 14px;background:var(--surf2);border-bottom:1px solid var(--brd)}
+
+  /* ── Callout boxes ── */
+  .callout{border-radius:8px;padding:10px 14px;font-size:12px;line-height:1.6;margin-top:8px}
+  .callout.gold{background:rgba(255,206,123,0.12);color:#633806}
+  .callout.teal{background:rgba(5,90,87,0.08);color:#055a57}
+
+  .expand-all-btn{font-size:12px;padding:5px 14px;border-radius:6px;border:0.5px solid var(--brd);background:transparent;cursor:pointer;color:var(--muted)}
+  .expand-all-btn:hover{background:var(--surf2)}
+
+  /* ── Gradient preview ── */
+  .gradient-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1rem 0}
+  .gradient-preview{height:60px;border-radius:10px;border:0.5px solid var(--brd);position:relative;overflow:hidden}
+  .gradient-preview .gp-label{position:absolute;bottom:6px;left:10px;font-size:9px;font-weight:500;color:white;text-shadow:0 1px 4px rgba(0,0,0,0.5)}
+</style>
+
+<h2 class="sr-only">KAIF Investor Presentation Blueprint — Complete strategic framework, color palette, branding, data reference, and 10-slide anatomy for the current institutional deck.</h2>
+
+<div class="hero">
+  <div class="hero-eyebrow">Presentation Architecture · Confidential · Updated Apr 2026</div>
+  <div class="hero-title">The <span>KAIF</span> Investor Pitch Blueprint</div>
+  <div class="hero-sub">The complete strategic reference for the KAIF institutional investor deck — narrative arc, full slide anatomy, exact branding system, color palette, typography, all live data, and performance visualization strategy as currently implemented.</div>
+  <div>
+    <span class="badge">10 Slide Deck</span>
+    <span class="badge">AI-Driven Global Equities</span>
+    <span class="badge teal">Live Track Record</span>
+    <span class="badge teal">Interactive Simulator</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 01 — BRAND IDENTITY & COLOR PALETTE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="section-wrap">
+  <div class="sec-num">Section 01</div>
+  <div class="sec-title">Brand Identity, Color Palette & Typography</div>
+  <div class="sec-sub">The KAIF deck enforces a strict six-color firm palette plus black/white, with Montserrat as the sole typeface. Every gradient, chart element, and accent is derived from these tokens.</div>
+
+  <!-- Color Palette -->
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px">Firm Color Palette (6 Colors)</div>
+  <div class="palette-grid">
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#055a57"></div>
+      <div class="swatch-name">Deep Teal</div>
+      <div class="swatch-hex">#055a57</div>
+      <div class="swatch-use">--firm-1 · Primary background gradients, slide foundations, CTA button text</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#00917c"></div>
+      <div class="swatch-name">Teal</div>
+      <div class="swatch-hex">#00917c</div>
+      <div class="swatch-use">--firm-2 · Secondary gradient stops, radial glows, closing slide accent</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#ffce7b"></div>
+      <div class="swatch-name">Gold</div>
+      <div class="swatch-hex">#ffce7b</div>
+      <div class="swatch-use">--firm-3 · Primary accent, eyebrows, KAIF line charts, metric highlights, CTA button bg</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#24a18f"></div>
+      <div class="swatch-name">Mid Teal</div>
+      <div class="swatch-hex">#24a18f</div>
+      <div class="swatch-use">--firm-4 · Supporting accent, interactive element states</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#49b0a1"></div>
+      <div class="swatch-name">Light Teal</div>
+      <div class="swatch-hex">#49b0a1</div>
+      <div class="swatch-use">--firm-5 · Simulator profit text, positive indicator color</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#92d0c7"></div>
+      <div class="swatch-name">Pale Teal</div>
+      <div class="swatch-hex">#92d0c7</div>
+      <div class="swatch-use">--firm-6 · Lightest teal, decorative accents</div>
+    </div>
+  </div>
+
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px;margin-top:1rem">Core Neutrals</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem">
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#000000;border-color:rgba(128,128,128,0.3)"></div>
+      <div class="swatch-name">Black</div>
+      <div class="swatch-hex">#000000</div>
+      <div class="swatch-use">Body background, primary dark base for all slides</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:#ffffff"></div>
+      <div class="swatch-name">White</div>
+      <div class="swatch-hex">#ffffff</div>
+      <div class="swatch-use">Primary text, headline numbers, metric values</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:rgba(255,206,123,0.18)"></div>
+      <div class="swatch-name">Gold Dim</div>
+      <div class="swatch-hex">rgba(255,206,123,0.18)</div>
+      <div class="swatch-use">Gold-tinted backgrounds for face-off column, metric card borders</div>
+    </div>
+    <div class="palette-swatch">
+      <div class="swatch-block" style="background:rgba(255,255,255,0.06);border-color:rgba(128,128,128,0.3)"></div>
+      <div class="swatch-name">White-06</div>
+      <div class="swatch-hex">rgba(255,255,255,0.06)</div>
+      <div class="swatch-use">Card borders, grid lines, table separators, subtle card backgrounds</div>
+    </div>
+  </div>
+
+  <!-- Donut Chart Colors -->
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px">Donut Chart Sector Colors</div>
+  <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:8px;margin-bottom:1.5rem">
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#ffce7b;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Tech</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#3ecfb4;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Health</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#5b9bd5;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Indust.</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#e06c6c;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Telecom</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#a78bfa;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Cons. Cyc.</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#f59e42;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Energy</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#7ecf8a;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Materials</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#d4a15e;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Utilities</div></div>
+    <div style="text-align:center"><div style="width:100%;height:32px;border-radius:6px;background:#cf7b7b;margin-bottom:4px"></div><div style="font-size:9px;color:var(--muted)">Real Est.</div></div>
+  </div>
+
+  <!-- Gradient Previews -->
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px">Slide Background Gradients</div>
+  <div class="gradient-row">
+    <div class="gradient-preview" style="background:linear-gradient(160deg,#000 0%,#055a57 50%,#000 100%)">
+      <span class="gp-label">Slide 01, 03, 07: Diagonal Teal</span>
+    </div>
+    <div class="gradient-preview" style="background:linear-gradient(180deg,#000 0%,#055a57 100%)">
+      <span class="gp-label">Slide 02: Top-down Teal</span>
+    </div>
+    <div class="gradient-preview" style="background:radial-gradient(circle at 75% 50%,#055a57 0%,#000 60%)">
+      <span class="gp-label">Slide 04: Radial Right</span>
+    </div>
+  </div>
+  <div class="gradient-row">
+    <div class="gradient-preview" style="background:radial-gradient(circle at 30% 70%,#00917c 0%,#055a57 35%,#000 100%)">
+      <span class="gp-label">Slide 05: Perf Radial</span>
+    </div>
+    <div class="gradient-preview" style="background:radial-gradient(circle at 20% 80%,#0d0d0d 0%,#060606 100%)">
+      <span class="gp-label">Slide 06: Near-Black</span>
+    </div>
+    <div class="gradient-preview" style="background:radial-gradient(circle at 70% 30%,#00917c 0%,#055a57 35%,#000 100%)">
+      <span class="gp-label">Slide 08: Teal Radial</span>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px;margin-top:1rem">Typography System</div>
+  <table class="typo-table">
+    <thead>
+      <tr><th>Token</th><th>Font</th><th>Size</th><th>Weight</th><th>Color</th><th>Usage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Fund Name</td><td>Montserrat</td><td>88px</td><td>700</td><td>White</td><td>Cover slide "KAIF" display</td></tr>
+      <tr><td>Slide Title</td><td>Montserrat</td><td>44px</td><td>700</td><td>White + Gold spans</td><td>Primary headline on every slide</td></tr>
+      <tr><td>Eyebrow</td><td>Montserrat</td><td>12px</td><td>600</td><td>Gold #ffce7b</td><td>Section label above title (uppercase, 0.25em tracking)</td></tr>
+      <tr><td>Slide Lead</td><td>Montserrat</td><td>16px</td><td>300</td><td>White-75</td><td>Subtitle / description paragraph</td></tr>
+      <tr><td>Metric Value</td><td>Montserrat</td><td>34px</td><td>700</td><td>White</td><td>KPI numbers in metric cards</td></tr>
+      <tr><td>Metric Label</td><td>Montserrat</td><td>11px</td><td>500</td><td>White-75</td><td>Uppercase label above metric values</td></tr>
+      <tr><td>Card Title</td><td>Montserrat</td><td>20px</td><td>600–700</td><td>White</td><td>Problem cards, term card values</td></tr>
+      <tr><td>Body Text</td><td>Montserrat</td><td>13px</td><td>300</td><td>White-50/75</td><td>Descriptions, table entries</td></tr>
+      <tr><td>Confidential</td><td>Montserrat</td><td>9px</td><td>600</td><td>White-50</td><td>Persistent footer (uppercase, 0.18em tracking)</td></tr>
+      <tr><td>Slide Counter</td><td>Montserrat</td><td>11px</td><td>500</td><td>White-30</td><td>Bottom-right "1 / 10" indicator</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Branding Assets -->
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px;margin-top:1rem">Logo & Branding Assets</div>
+  <table class="typo-table">
+    <thead>
+      <tr><th>Asset</th><th>Filename</th><th>Usage</th><th>Size / Placement</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Vertical / Color Logo</td><td>Keheilan Logo Colors_Keheilan Logo_vertical.png</td><td>Cover slide central logo</td><td>180px height, centered in glass card</td></tr>
+      <tr><td>Horizontal / White Logo</td><td>Keheilan Logo white_Keheilan Horizontal Logo - English.png</td><td>Persistent top-left logo + closing slide</td><td>115px persistent / 130px closing</td></tr>
+      <tr><td>Horizontal / Green Logo</td><td>Keheilan Logo green_Keheilan Horizontal Logo - English.png</td><td>Reserve / not currently used in deck</td><td>Available for light-bg contexts</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout teal">
+    <strong>Branding Rule:</strong> The persistent logo (115px, top-left) and persistent footer ("Confidential" + "AFM Registered Dutch Manager · Licensed" bottom-left) appear on every slide. The slide counter (bottom-right) tracks position as "N / 10".
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 02 — NARRATIVE ARC
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="section-wrap">
+  <div class="sec-num">Section 02</div>
+  <div class="sec-title">The Narrative Arc — "The Future of Intelligent Investing"</div>
+  <div class="sec-sub">The deck flows through five psychological acts, each building on the last. The narrative is about AI-driven alpha generation and disciplined risk management — not about any single market niche.</div>
+
+  <div class="arc-grid">
+    <div class="arc-step">
+      <div class="arc-num">ACT I</div>
+      <div class="arc-act">The Broken Market</div>
+      <div class="arc-desc">90% of active managers fail to beat S&P 500 over 15 years. Human bias, static portfolios, and imprecise selection bleed alpha.</div>
+      <div class="arc-arrow">›</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">ACT II</div>
+      <div class="arc-act">The KAIF Solution</div>
+      <div class="arc-desc">Five-pillar AI engine — from market screening through live execution — operating with pure autonomy, zero emotion.</div>
+      <div class="arc-arrow">›</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">ACT III</div>
+      <div class="arc-act">The Glass Box AI</div>
+      <div class="arc-desc">Transparent intelligence: fundamentals, volume dynamics, and sentiment parsing — millions of data points synthesized into conviction-weighted alpha.</div>
+      <div class="arc-arrow">›</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">ACT IV</div>
+      <div class="arc-act">The Evidence</div>
+      <div class="arc-desc">Live track record: +40.70% cumulative vs S&P +35.36%. Superior Sharpe (2.93), lower vol (2.81%), shallower drawdown (-2.69%). Head-to-head dominance.</div>
+      <div class="arc-arrow">›</div>
+    </div>
+    <div class="arc-step">
+      <div class="arc-num">ACT V</div>
+      <div class="arc-act">The Invitation</div>
+      <div class="arc-desc">Institutional framework: AFM-registered, Netherlands-domiciled, IBKR custody. Aligned fee structure. Request access.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 03 — 10-SLIDE DECK ANATOMY
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="section-wrap">
+  <div class="sec-num">Section 03</div>
+  <div class="sec-title">Master Slide Deck — Anatomy of 10 Slides</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+    <div style="font-size:12px;color:var(--muted)">Click any slide to expand full briefing · All data is live and verified</div>
+    <button class="expand-all-btn" onclick="toggleAll()">Expand all</button>
+  </div>
+  <div class="slide-list" id="slides">
+
+    <!-- SLIDE 01 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">01</div>
+        <div class="slide-hook">The Opening Statement — Authority from the first frame</div>
+        <div class="slide-tag">Cover</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Live Content</h4><ul>
+            <li>Central glass-card with frosted dark backdrop + subtle gold border</li>
+            <li>Keheilan vertical color logo (180px)</li>
+            <li>Fund name: "KAIF" — 88px, 700wt, 0.14em letter-spacing</li>
+            <li>Subtitle: "Global Equities Managed by Proprietary AI"</li>
+            <li>Gold divider line (72px animated expand)</li>
+            <li>Tagline: "Algorithmic Precision. Ethical Integrity."</li>
+            <li>Sub-tagline: "Precision where it counts. Principles throughout."</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>Full-viewport slide, background: diagonal gradient (black→teal→black)</li>
+            <li>Animated SVG neural mesh: 5 node clusters with gold dots, connecting lines, drift + pulse animations</li>
+            <li>Central radial gold glow (900px circle, 6% opacity)</li>
+            <li>Glass card: rgba(0,0,0,0.45), 24px blur, 32px radius, gold border at 15% opacity</li>
+            <li>Staggered fadeIn/fadeInUp animations: logo→name→subtitle→divider→tagline (0.3s–1.7s)</li>
+          </ul></div>
+          <div class="slide-col"><h4>Design Rules</h4><ul>
+            <li>No date — keeps deck evergreen</li>
+            <li>No charts, no data — pure authority</li>
+            <li>Logo fallback text "Keheilan Asset Management" if image fails</li>
+            <li>Confidential footer + AFM registration persistent across all slides</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>First impressions encode credibility. A spare, confident cover signals you are not pitching — you are presenting. The glass-card + neural mesh communicates AI sophistication without a single word of explanation.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 02 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">02</div>
+        <div class="slide-hook">The 90% Problem — Why active management is broken</div>
+        <div class="slide-tag">Problem</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Live Content</h4><ul>
+            <li>Hero statistic: "90%" — 180px, 800wt, gold, with text shadow glow</li>
+            <li>"of active fund managers <strong>fail to beat</strong> the S&P 500 over 15 years."</li>
+            <li>Source: "S&P Dow Jones SPIVA U.S. Year-End 2024 Scorecard"</li>
+            <li>Three problem cards: Human Bias (🧠), Static Portfolios (📉), Imprecise Selection (🎯)</li>
+            <li>Each card: 32px emoji icon → title → one-line descriptor</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>Background: vertical gradient (black → deep teal)</li>
+            <li>Cards: rgba(255,255,255,0.03) bg, white-06 border, 14px radius</li>
+            <li>Top gold gradient line on each card (25% opacity)</li>
+            <li>Hover: border moves to gold-18%</li>
+            <li>Staggered animation: eyebrow→stat→label→source→cards cascade</li>
+          </ul></div>
+          <div class="slide-col"><h4>Data Used</h4><ul>
+            <li>90% — SPIVA U.S. Year-End 2024 Scorecard</li>
+            <li>"Human Bias" — "Emotion destroys alpha"</li>
+            <li>"Static Portfolios" — "Markets move. Portfolios don't."</li>
+            <li>"Imprecise Selection" — "Narrow criteria. Missed opportunities."</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>Skeptics need to feel the gap before they can value the solution. The massive "90%" creates visceral impact — it reframes the question from "Why AI?" to "Why not?"</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 03 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">03</div>
+        <div class="slide-hook">Five Pillars. Zero Compromise. — The KAIF Architecture</div>
+        <div class="slide-tag">Solution</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Live Content</h4><ul>
+            <li>Eyebrow: "The Solution"</li>
+            <li>Title: "Five Pillars. <span style="color:#ffce7b">Zero Compromise.</span>"</li>
+            <li>Lead: "A proprietary AI engine — from raw data to live trades — operating with pure autonomy."</li>
+            <li>Five-pillar pipeline:</li>
+            <li>01 Market Screening → 10,000+ securities</li>
+            <li>02 Shariah Filter → Zero prohibited sectors</li>
+            <li>03 Signal Generation → Multi-factor analysis</li>
+            <li>04 Backtesting Engine → Parallel scenarios</li>
+            <li>05 Live Execution → Systematic & precise</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>5-column grid pipeline, connected by gold gradient line at 44px from top</li>
+            <li>Circular icons (72px): globe 🌐, filter ⚗️, lightning ⚡, ruler 📐, arrows 🔄</li>
+            <li>Icon border: gold 30%, with glow on hover (scale 1.08)</li>
+            <li>Metric badges: gold-10% bg, gold-20% border, rounded pill shape</li>
+            <li>Staggered cascade animation (0.8s–1.6s)</li>
+          </ul></div>
+          <div class="slide-col"><h4>Key Data Points</h4><ul>
+            <li>10,000+ securities in global equity universe</li>
+            <li>Zero prohibited sectors post Shariah filter</li>
+            <li>Multi-factor analysis for signal generation</li>
+            <li>Parallel scenario backtesting</li>
+            <li>Systematic & precise live execution</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>A clean process pipeline turns complexity into confidence. Investors don't need to understand the engine — they need to believe it is engineered. The 5-pillar diagram is your proof of process.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 04 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">04</div>
+        <div class="slide-hook">The Glass Box AI — We don't just predict. We understand.</div>
+        <div class="slide-tag">AI Engine</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Live Content</h4><ul>
+            <li>Eyebrow: "The Glass Box AI"</li>
+            <li>Title: "We don't just predict. <span style="color:#ffce7b">We understand.</span>"</li>
+            <li>Lead: "A transparent intelligence engine parsing millions of data points to synthesize conviction-weighted alpha."</li>
+            <li>Three engine capabilities (left panel):</li>
+            <li>📈 Fundamental & Growth Metrics — P/E ratios, forward guidance, debt structures, earnings surprises</li>
+            <li>📊 Volume Dynamics & Market Structure — Liquidity flows, institutional block trades, bid/ask pressure</li>
+            <li>🧠 Sentiment & Contextual Parsing — Real-time news flows, macro data, market sentiment</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>Split layout: text left + animated visual right</li>
+            <li>Right side: concentric spinning rings (40s/25s/15s) with gold data nodes</li>
+            <li>Central pulsing core: gold radial gradient, 60px glow shadow</li>
+            <li>Ring-1: dashed border, 380px, clockwise</li>
+            <li>Ring-2: solid firm-2 border, 270px, counter-clockwise</li>
+            <li>Ring-3: gold-15% border, 160px, clockwise</li>
+            <li>Engine items: glass cards with icon boxes (56×56, gold bg, 12px radius)</li>
+            <li>Hover: cards slide right 4px + gold border</li>
+          </ul></div>
+          <div class="slide-col"><h4>Framing Strategy</h4><ul>
+            <li>Position as "transparent" AI — "Glass Box" not "Black Box"</li>
+            <li>Show what the engine analyzes, not how it decides</li>
+            <li>Three capability pillars: fundamentals, market structure, sentiment</li>
+            <li>The spinning rings visual = perpetual motion = always-on intelligence</li>
+            <li>Scale: 0.93 with 25px translateY to give cinematic proportion</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>The "Glass Box" framing is deliberate — it counters the "black box" objection. By showing the categories of data the engine processes, investors feel informed without requiring technical disclosure. The spinning rings create a visceral sense of perpetual computational power.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 05 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">05</div>
+        <div class="slide-hook">The Alpha — Asymmetric Returns. Strict Risk Control.</div>
+        <div class="slide-tag">Performance ★</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Live Content</h4><ul>
+            <li>Eyebrow: "The Alpha"</li>
+            <li>Title: "Asymmetric Returns. <span style="color:#ffce7b">Strict Risk Control.</span>"</li>
+            <li>Sub: "Live Trading · Inception Apr 7, 2025 – Apr 8, 2026"</li>
+            <li>Cumulative return chart (SVG line chart)</li>
+            <li>Legend: KAIF +40.70% (gold) / S&P 500 TR +35.36% (white-50)</li>
+            <li>Four KPI metric cards (right panel)</li>
+          </ul></div>
+          <div class="slide-col"><h4>Performance Data</h4><ul>
+            <li>KAIF Cumulative Return: +40.70%</li>
+            <li>S&P 500 TR Cumulative: +35.36%</li>
+            <li>Sharpe Ratio: 2.93 (vs S&P 2.08)</li>
+            <li>Max Drawdown: -2.69% (vs S&P -5.70%)</li>
+            <li>Volatility (σ): 2.81% (vs S&P 3.47%)</li>
+            <li>Inception: April 7, 2025</li>
+            <li>Latest data: April 8, 2026</li>
+            <li>13 monthly data points on chart (Apr '25 → Apr '26)</li>
+          </ul></div>
+          <div class="slide-col"><h4>Chart Specifications</h4><ul>
+            <li>SVG viewBox: 600×240, preserveAspectRatio none</li>
+            <li>KAIF line: #ffce7b, 2.5px stroke, drawLine animation (2s)</li>
+            <li>S&P line: white-50, 2px stroke, drawLine animation (2s)</li>
+            <li>Y-axis: 5%–45% (5 gridlines)</li>
+            <li>X-axis: Apr–Apr (13 months)</li>
+            <li>End dots: KAIF 5r gold / S&P 4r white-50</li>
+            <li>Metric cards: 2×2 grid, gold-18% border, hover lift</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>The single biggest slide in the deck. The animated line draws attention naturally — viewers watch KAIF's gold line pull ahead. Showing both return AND risk metrics in adjacent cards prevents cherry-picking objections. "Asymmetric" framing = better upside, less downside.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 06 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">06</div>
+        <div class="slide-hook">Current Composition — What the portfolio holds</div>
+        <div class="slide-tag">Portfolio</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Sector Allocation (Donut)</h4><ul>
+            <li>Technology: 33.2% (#ffce7b, 0°–163°)</li>
+            <li>Healthcare: 10.2% (#3ecfb4, 163°–213.1°)</li>
+            <li>Industrials: 8.4% (#5b9bd5, 213.1°–254.4°)</li>
+            <li>Telecommunications: 6.5% (#e06c6c, 254.4°–286.3°)</li>
+            <li>Consumer Cyclicals: 6.4% (#a78bfa, 286.3°–317.7°)</li>
+            <li>Energy: 4.0% (#f59e42, 317.7°–337.4°)</li>
+            <li>Basic Materials: 2.3% (#7ecf8a, 337.4°–348.7°)</li>
+            <li>Utilities: 1.6% (#d4a15e, 348.7°–356.5°)</li>
+            <li>Real Estate: 0.7% (#cf7b7b, 356.5°–360°)</li>
+            <li>Center: "100+" Positions</li>
+          </ul></div>
+          <div class="slide-col"><h4>Top 10 Holdings</h4><ul>
+            <li>1. GOOG — Alphabet Inc — 4.92%</li>
+            <li>2. MSFT — Microsoft Corp — 4.23%</li>
+            <li>3. NVDA — NVIDIA Corp — 3.58%</li>
+            <li>4. AMZN — Amazon.com Inc — 3.55%</li>
+            <li>5. META — Meta Platforms Inc — 2.92%</li>
+            <li>6. AAPL — Apple Inc — 2.80%</li>
+            <li>7. ASML — ASML Holding NV — 2.63%</li>
+            <li>8. TSM — Taiwan Semiconductor — 2.60%</li>
+            <li>9. AVGO — Broadcom Inc — 1.97%</li>
+            <li>10. AMD — Advanced Micro Devices — 1.88%</li>
+          </ul></div>
+          <div class="slide-col"><h4>Geographic Allocation</h4><ul>
+            <li>North America: 88.3%</li>
+            <li>Europe: 8.5%</li>
+            <li>Asia: 2.8%</li>
+            <li>Africa: 0.4%</li>
+            <li>Countries represented: 14</li>
+            <li>Disclaimer: "Allocations reflect a point-in-time snapshot as of April 8, 2026. Portfolio composition is subject to continuous AI-driven rebalancing."</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>Allocators need to understand what they own. Showing sector and geographic breakdown signals governance and transparency. The familiar mega-cap names (GOOG, MSFT, NVDA) instantly communicate institutional quality. The donut chart's multi-color design prevents monotony and makes sector diversity visually obvious.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 07 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">07</div>
+        <div class="slide-hook">KAIF vs S&P 500 — Head-to-Head Risk Face-Off</div>
+        <div class="slide-tag">Risk</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Face-Off Data</h4><ul>
+            <li>Sharpe Ratio: KAIF 2.93 ★ / S&P 2.08</li>
+            <li>Sortino Ratio: KAIF 11.32 ★ / S&P 4.82</li>
+            <li>Volatility (σ): KAIF 2.81% ★ / S&P 3.47%</li>
+            <li>Downside Deviation: KAIF 0.73% ★ / S&P 1.50%</li>
+            <li>Beta: KAIF 0.67 ★ / S&P 1.00</li>
+            <li>Drawdown Recovery: KAIF 1 Month ★ / S&P Ongoing</li>
+            <li>Positive Months: KAIF 77% / S&P 85% ★</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>Full-width comparison table</li>
+            <li>KAIF column: gold header, gold-tinted bg rows</li>
+            <li>S&P column: muted white header, neutral rows</li>
+            <li>Winner cells: gold color treatment (faceoff-win class)</li>
+            <li>KAIF wins 6 of 7 metrics; S&P wins Positive Months only</li>
+            <li>Row hover: subtle bg highlight</li>
+            <li>Footer note on Shariah compliance as quality filter</li>
+          </ul></div>
+          <div class="slide-col"><h4>Footer Statement</h4><ul>
+            <li>"Shariah compliance as a quality filter: Excludes highly-leveraged, speculative sectors — naturally improving the portfolio's risk profile."</li>
+            <li>This is the only slide where Shariah is mentioned — and it's framed purely as risk management, not religious compliance</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>Sophisticated allocators fear drawdowns more than they covet returns. Showing KAIF winning 6 of 7 risk metrics converts a return story into a capital preservation story. The face-off format triggers competitive evaluation — and KAIF wins convincingly.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 08 (SIMULATOR) -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">08</div>
+        <div class="slide-hook">Interactive Simulator — See the KAIF Edge</div>
+        <div class="slide-tag">Simulator</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Live Content</h4><ul>
+            <li>Eyebrow: "Interactive Simulator"</li>
+            <li>Title: "See the <span style="color:#ffce7b">KAIF Edge</span>"</li>
+            <li>Lead: "Calculate hypothetical cumulative returns across the live trading track record."</li>
+            <li>Investment size slider: $100K – $10M (step: $100K)</li>
+            <li>Displayed value: 56px, 700wt, white</li>
+            <li>Dual result cards: S&P 500 vs KAIF</li>
+            <li>Alpha Generated differential at bottom</li>
+          </ul></div>
+          <div class="slide-col"><h4>Calculator Logic</h4><ul>
+            <li>S&P 500 return: base × 1.3536 (+35.36%)</li>
+            <li>KAIF return: base × 1.4070 (+40.70%)</li>
+            <li>Alpha = KAIF result − S&P result</li>
+            <li>Default display ($1M): S&P $1,353,600 / KAIF $1,407,000 / Alpha +$53,400</li>
+            <li>Formatted: Intl.NumberFormat, USD, no decimals</li>
+            <li>Real-time update on slider input event</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>Background: vertical teal gradient</li>
+            <li>S&P card: standard glass card (white-03 bg, white-12 border)</li>
+            <li>KAIF card: gold-tinted (scale 1.05, gold border, gold bg at 6%, gold glow shadow)</li>
+            <li>Profit label: firm-5 for S&P, gold for KAIF</li>
+            <li>Alpha differential: gold strong text, 18px, separated by gold border-top</li>
+            <li>Range input: native styling with accent-color: var(--gold)</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>Interactivity dramatically increases engagement and memory. When an investor personally drags a slider to $5M and sees "$2,035,000 KAIF profit vs $1,768,000 S&P profit," the alpha becomes tangible and personal. The KAIF card's larger, elevated treatment subconsciously signals superiority.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 09 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">09</div>
+        <div class="slide-hook">Institutional Framework — Fund Structure & Terms</div>
+        <div class="slide-tag">Structure</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Fund Terms Data</h4><ul>
+            <li>Fund Vehicle: Keheilan Fund — Stichting Legal Owner · Netherlands-domiciled</li>
+            <li>Regulatory Status: AFM Registered — Dutch Authority for Financial Markets · Licensed Manager</li>
+            <li>Prime Broker / Custodian: Interactive Brokers — Segregated client accounts · Multi-currency</li>
+            <li>Management Fee: 2.0% p.a. — Ongoing cost · On net asset value</li>
+            <li>Performance Fee: 20% HWM — High-water mark · Of net new profits</li>
+            <li>Entry Fee: 0.75% — One-off cost upon subscription</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>3×2 card grid layout</li>
+            <li>Each card: dark bg (rgba 0,0,0,0.2), white-06 border, 14px radius</li>
+            <li>Card structure: emoji icon (top-right, 35% opacity) → uppercase label → bold value → detail text</li>
+            <li>Icons: 🏦 Fund, 📜 Regulatory, 🔒 Custodian, 💰 Mgmt Fee, 🏆 Perf Fee, 📎 Entry Fee</li>
+            <li>Hover: gold border at 25% opacity</li>
+            <li>Footer: disclaimer text (12px, 300wt, white-50)</li>
+          </ul></div>
+          <div class="slide-col"><h4>Disclaimer Text</h4><ul>
+            <li>"Terms are indicative and subject to the fund's offering documentation."</li>
+            <li>"Qualified investors only."</li>
+            <li>"Past performance is not indicative of future results."</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>Institutional investors diligence structure before performance. AFM oversight and IBKR custody are badges of legitimacy. The clean 6-card grid format makes complex legal terms scannable and non-intimidating. The "Stichting Legal Owner" language signals Dutch institutional best practice.</div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10 -->
+    <div class="slide-card">
+      <div class="slide-header" onclick="toggle(this)">
+        <div class="slide-n">10</div>
+        <div class="slide-hook">The Future of Intelligent Investing — Closing & CTA</div>
+        <div class="slide-tag">Close</div>
+      </div>
+      <div class="slide-body">
+        <div class="slide-row">
+          <div class="slide-col"><h4>Live Content</h4><ul>
+            <li>Keheilan horizontal white logo (130px)</li>
+            <li>Headline: "The Future of <span style="color:#ffce7b">Intelligent Investing</span>"</li>
+            <li>Sub: "KAIF does not ask you to choose between performance and principle."</li>
+            <li>CTA Button: "Request Access →" → mailto:invest@keheilan.com</li>
+            <li>Contact: invest@keheilan.com</li>
+            <li>Website: keheilan.com</li>
+            <li>Domicile: Netherlands</li>
+          </ul></div>
+          <div class="slide-col"><h4>Visual System</h4><ul>
+            <li>Background: radial gradient (center, firm-2 → firm-1)</li>
+            <li>CTA button: gold bg, firm-1 text, 50px radius pill, 20px glow shadow</li>
+            <li>Hover: lighten to #ffe0a0, white border, lift -2px, stronger glow</li>
+            <li>Contact items: 3-column flex, centered, label+value structure</li>
+            <li>Staggered fadeIn cascade (0.2s–1.0s)</li>
+          </ul></div>
+          <div class="slide-col"><h4>Closing Message</h4><ul>
+            <li>The thesis in one sentence: performance + principle, not either/or</li>
+            <li>No aggressive sales language</li>
+            <li>Mailto link pre-fills subject: "KAIF Access Request"</li>
+            <li>Project confidence: the fund speaks for itself</li>
+          </ul></div>
+        </div>
+        <div class="psych-box"><div class="psych-label">Investor Psychology</div>A clear, friction-free path to action converts interest into commitment. The gold CTA button is the only actionable color element on the slide, creating a natural focal point. The closing line — "performance and principle" — echoes without repeating the opening tagline.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 04 — COMPLETE DATA REFERENCE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="section-wrap">
+  <div class="sec-num">Section 04</div>
+  <div class="sec-title">Complete Data Reference — Every Number in the Deck</div>
+  <div class="sec-sub">All data points used across the 10 slides, organized for quick reference and verification.</div>
+
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px">Performance Metrics (Slide 05)</div>
+  <div class="data-grid">
+    <div class="data-card">
+      <div class="data-card-label">Inception Date</div>
+      <div class="data-card-value" style="font-size:18px">Apr 7, 2025</div>
+      <div class="data-card-sub">Live trading start date</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Latest Data</div>
+      <div class="data-card-value" style="font-size:18px">Apr 8, 2026</div>
+      <div class="data-card-sub">As-of date for all metrics</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">KAIF Cumulative</div>
+      <div class="data-card-value">+40.70%</div>
+      <div class="data-card-sub">Total return since inception</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">S&P 500 TR</div>
+      <div class="data-card-value">+35.36%</div>
+      <div class="data-card-sub">Benchmark cumulative</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Sharpe Ratio</div>
+      <div class="data-card-value">2.93</div>
+      <div class="data-card-sub">vs S&P 500: 2.08</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Max Drawdown</div>
+      <div class="data-card-value">-2.69%</div>
+      <div class="data-card-sub">vs S&P 500: -5.70%</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Volatility (σ)</div>
+      <div class="data-card-value">2.81%</div>
+      <div class="data-card-sub">vs S&P 500: 3.47%</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Alpha Over S&P</div>
+      <div class="data-card-value">+5.34%</div>
+      <div class="data-card-sub">Cumulative outperformance</div>
+    </div>
+  </div>
+
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px;margin-top:1.5rem">Risk Face-Off Data (Slide 07)</div>
+  <div class="faceoff-grid">
+    <div class="faceoff-header">Metric</div>
+    <div class="faceoff-header" style="text-align:center;color:#ffce7b">KAIF</div>
+    <div class="faceoff-header" style="text-align:center">S&P 500</div>
+
+    <div class="faceoff-cell">Sharpe Ratio</div>
+    <div class="faceoff-cell">2.93 ★</div>
+    <div class="faceoff-cell">2.08</div>
+
+    <div class="faceoff-cell">Sortino Ratio</div>
+    <div class="faceoff-cell">11.32 ★</div>
+    <div class="faceoff-cell">4.82</div>
+
+    <div class="faceoff-cell">Volatility (σ)</div>
+    <div class="faceoff-cell">2.81% ★</div>
+    <div class="faceoff-cell">3.47%</div>
+
+    <div class="faceoff-cell">Downside Deviation</div>
+    <div class="faceoff-cell">0.73% ★</div>
+    <div class="faceoff-cell">1.50%</div>
+
+    <div class="faceoff-cell">Beta</div>
+    <div class="faceoff-cell">0.67 ★</div>
+    <div class="faceoff-cell">1.00</div>
+
+    <div class="faceoff-cell">Drawdown Recovery</div>
+    <div class="faceoff-cell">1 Month ★</div>
+    <div class="faceoff-cell">Ongoing</div>
+
+    <div class="faceoff-cell">Positive Months</div>
+    <div class="faceoff-cell">77%</div>
+    <div class="faceoff-cell">85% ★</div>
+  </div>
+
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px;margin-top:1.5rem">Top 10 Holdings (Slide 06)</div>
+  <table class="holdings-table">
+    <thead><tr><th>Rank</th><th>Ticker</th><th>Company</th><th>Weight</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>GOOG</td><td>Alphabet Inc</td><td>4.92%</td></tr>
+      <tr><td>2</td><td>MSFT</td><td>Microsoft Corp</td><td>4.23%</td></tr>
+      <tr><td>3</td><td>NVDA</td><td>NVIDIA Corp</td><td>3.58%</td></tr>
+      <tr><td>4</td><td>AMZN</td><td>Amazon.com Inc</td><td>3.55%</td></tr>
+      <tr><td>5</td><td>META</td><td>Meta Platforms Inc</td><td>2.92%</td></tr>
+      <tr><td>6</td><td>AAPL</td><td>Apple Inc</td><td>2.80%</td></tr>
+      <tr><td>7</td><td>ASML</td><td>ASML Holding NV</td><td>2.63%</td></tr>
+      <tr><td>8</td><td>TSM</td><td>Taiwan Semiconductor</td><td>2.60%</td></tr>
+      <tr><td>9</td><td>AVGO</td><td>Broadcom Inc</td><td>1.97%</td></tr>
+      <tr><td>10</td><td>AMD</td><td>Advanced Micro Devices</td><td>1.88%</td></tr>
+    </tbody>
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:1.5rem">
+    <div>
+      <div style="font-size:12px;font-weight:600;margin-bottom:8px">Sector Allocation (Donut)</div>
+      <table class="holdings-table">
+        <thead><tr><th>Sector</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td>Technology</td><td>33.2%</td></tr>
+          <tr><td>Healthcare</td><td>10.2%</td></tr>
+          <tr><td>Industrials</td><td>8.4%</td></tr>
+          <tr><td>Telecommunications</td><td>6.5%</td></tr>
+          <tr><td>Consumer Cyclicals</td><td>6.4%</td></tr>
+          <tr><td>Energy</td><td>4.0%</td></tr>
+          <tr><td>Basic Materials</td><td>2.3%</td></tr>
+          <tr><td>Utilities</td><td>1.6%</td></tr>
+          <tr><td>Real Estate</td><td>0.7%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:600;margin-bottom:8px">Geographic Allocation</div>
+      <table class="holdings-table">
+        <thead><tr><th>Region</th><th>Weight</th></tr></thead>
+        <tbody>
+          <tr><td>North America</td><td>88.3%</td></tr>
+          <tr><td>Europe</td><td>8.5%</td></tr>
+          <tr><td>Asia</td><td>2.8%</td></tr>
+          <tr><td>Africa</td><td>0.4%</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px">Fund Structural Data</div>
+        <table class="holdings-table">
+          <thead><tr><th>Term</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Vehicle</td><td>Stichting Legal Owner</td></tr>
+            <tr><td>Domicile</td><td>Netherlands</td></tr>
+            <tr><td>Regulator</td><td>AFM (Dutch)</td></tr>
+            <tr><td>Custodian</td><td>Interactive Brokers</td></tr>
+            <tr><td>Mgmt Fee</td><td>2.0% p.a.</td></tr>
+            <tr><td>Perf Fee</td><td>20% HWM</td></tr>
+            <tr><td>Entry Fee</td><td>0.75%</td></tr>
+            <tr><td>Positions</td><td>100+</td></tr>
+            <tr><td>Countries</td><td>14</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px;margin-top:1.5rem">Monthly Cumulative Return Data (Chart Polyline Points)</div>
+  <table class="holdings-table">
+    <thead><tr><th>Month</th><th>KAIF Cum. Approx.</th><th>S&P 500 TR Approx.</th><th>KAIF SVG Y</th><th>S&P SVG Y</th></tr></thead>
+    <tbody>
+      <tr><td>Apr 2025</td><td>~1%</td><td>~5%</td><td>198.9</td><td>178.3</td></tr>
+      <tr><td>May 2025</td><td>~9%</td><td>~12%</td><td>163.6</td><td>147.1</td></tr>
+      <tr><td>Jun 2025</td><td>~16%</td><td>~18%</td><td>132.8</td><td>120.4</td></tr>
+      <tr><td>Jul 2025</td><td>~18%</td><td>~20.5%</td><td>122.7</td><td>107.9</td></tr>
+      <tr><td>Aug 2025</td><td>~20%</td><td>~23%</td><td>115.9</td><td>96.6</td></tr>
+      <tr><td>Sep 2025</td><td>~25%</td><td>~28%</td><td>89.4</td><td>75.6</td></tr>
+      <tr><td>Oct 2025</td><td>~30%</td><td>~31%</td><td>69.9</td><td>61.7</td></tr>
+      <tr><td>Nov 2025</td><td>~30.5%</td><td>~31.5%</td><td>66.7</td><td>60.1</td></tr>
+      <tr><td>Dec 2025</td><td>~29.5%</td><td>~31.5%</td><td>71.3</td><td>59.7</td></tr>
+      <tr><td>Jan 2026</td><td>~36%</td><td>~34%</td><td>41.6</td><td>50.8</td></tr>
+      <tr><td>Feb 2026</td><td>~34.5%</td><td>~33%</td><td>48.9</td><td>55.5</td></tr>
+      <tr><td>Mar 2026</td><td>~32%</td><td>~26%</td><td>58.6</td><td>86.3</td></tr>
+      <tr><td>Apr 2026</td><td>~40.7%</td><td>~35.4%</td><td>39.3</td><td>63.4</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout gold" style="margin-top:1rem">
+    <strong>Data Source:</strong> All performance data sourced from IBKR live account (Stichting Legal Owner Keheilan Fund, inception April 08, 2026 CSV). S&P 500 TR benchmark via S&P Dow Jones Indices. SPIVA statistic (90%) from S&P Dow Jones SPIVA U.S. Year-End 2024 Scorecard.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 05 — ANIMATION & INTERACTION FRAMEWORK
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="section-wrap">
+  <div class="sec-num">Section 05</div>
+  <div class="sec-title">Animation & Interaction Framework</div>
+  <div class="sec-sub">The deck uses CSS keyframe animations and JavaScript for slide navigation and the interactive simulator. No external libraries — pure vanilla.</div>
+
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px">Core Animations</div>
+  <table class="typo-table">
+    <thead><tr><th>Animation</th><th>Keyframes</th><th>Duration</th><th>Usage</th></tr></thead>
+    <tbody>
+      <tr><td>fadeInUp</td><td>opacity 0→1, translateY 24px→0</td><td>0.5s–0.8s</td><td>Primary entrance for titles, cards, pillars</td></tr>
+      <tr><td>fadeIn</td><td>opacity 0→1</td><td>0.5s–1.2s</td><td>Eyebrows, leads, logos, legends</td></tr>
+      <tr><td>expandWidth</td><td>width 0→72px</td><td>0.8s</td><td>Cover divider line</td></tr>
+      <tr><td>drawLine</td><td>stroke-dashoffset 1200→0</td><td>2s</td><td>SVG chart line reveals</td></tr>
+      <tr><td>pulse</td><td>opacity 0.3↔0.7, r 2↔3</td><td>4s loop</td><td>Neural mesh node dots</td></tr>
+      <tr><td>drift</td><td>translate(0,0)↔(3,-2)</td><td>12s loop</td><td>Neural mesh group hover</td></tr>
+      <tr><td>spin</td><td>rotate(0→360deg)</td><td>15s–40s</td><td>Concentric rings (AI engine)</td></tr>
+      <tr><td>spin-reverse</td><td>rotate(0→-360deg)</td><td>25s</td><td>Counter-rotating middle ring</td></tr>
+      <tr><td>pulse-core</td><td>scale 1↔1.12, opacity 0.8↔1</td><td>3s loop</td><td>Engine core glow</td></tr>
+      <tr><td>hintFade</td><td>opacity 1→0</td><td>4s (3s delay)</td><td>Navigation hint auto-fade</td></tr>
+    </tbody>
+  </table>
+
+  <div style="font-size:12px;font-weight:600;margin-bottom:8px;margin-top:1rem">Slide Transition System</div>
+  <table class="typo-table">
+    <thead><tr><th>Property</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>Transition type</td><td>Crossfade (opacity 0→1) with cubic-bezier(0.4, 0, 0.2, 1)</td></tr>
+      <tr><td>Duration</td><td>0.7s</td></tr>
+      <tr><td>Slide positioning</td><td>All slides absolute-positioned, stacked. Only .active gets opacity:1 + visibility:visible</td></tr>
+      <tr><td>Navigation</td><td>Arrow keys (←→↑↓), Space, Home/End, click left/right half</td></tr>
+      <tr><td>Slide count</td><td>10 slides (1/10 counter, bottom-right)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SECTION 06 — STRATEGIC PRESENTATION RULES
+     ═══════════════════════════════════════════════════════════════ -->
+
+<div class="section-wrap" style="border-bottom:none">
+  <div class="sec-num">Section 06</div>
+  <div class="sec-title">Strategic Presentation Rules — How to Present This Deck</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:1rem">
+    <div class="data-card">
+      <div class="data-card-label">Rule 1 — Lead with the Problem</div>
+      <div class="data-card-sub">The 90% statistic from SPIVA creates immediate urgency. Let the number sit for 3 seconds before speaking. The audience needs to feel the market failure before they can value the solution.</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Rule 2 — Show the Process, Not the Code</div>
+      <div class="data-card-sub">The five-pillar pipeline and Glass Box AI demonstrate sophistication without technical exposure. Say "transparent intelligence engine" — never mention specific libraries, data vendors, or model architectures.</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Rule 3 — Lead with Risk-Adjusted Metrics</div>
+      <div class="data-card-sub">Open the performance narrative with Sharpe (2.93), Drawdown (-2.69%), and Volatility (2.81%) — not raw return. Returns become the reward; risk management is the trust narrative. Win trust first, then reveal upside.</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Rule 4 — Use the Simulator as an Anchor</div>
+      <div class="data-card-sub">Set the slider to the investor's likely allocation size. When they see their specific dollar amount growing under KAIF vs S&P, alpha becomes personal. This is the slide where commitment crystallizes.</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Rule 5 — The Face-Off Table Wins Arguments</div>
+      <div class="data-card-sub">KAIF wins 6 of 7 risk metrics. The only S&P win (positive months 85% vs 77%) is minor. Let the table speak — then add: "Same market, better risk-adjusted outcomes."</div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label">Rule 6 — Close with Confidence, Not Pressure</div>
+      <div class="data-card-sub">"KAIF does not ask you to choose between performance and principle." No manufactured urgency. The fund's track record is the pitch. The CTA is an invitation, not a ask.</div>
+    </div>
+  </div>
+
+  <div class="callout teal" style="margin-top:1.5rem">
+    <strong>Presentation Mode:</strong> Open KAIF_Deck.html in Chrome → F11 for fullscreen → Arrow keys or click to navigate → 10 slides, ~15–20 minute presentation. All animations trigger on slide entry. The simulator slide should be paused for interactive audience engagement.
+  </div>
+
+  <div class="callout gold" style="margin-top:0.5rem">
+    <strong>The master closing line:</strong> <em>"The data speaks. The architecture is proven. The framework is institutional. The only question left is whether you want to be early — or on time."</em>
+  </div>
+</div>
+
+
+<script>
+function toggle(header){
+  const body = header.nextElementSibling;
+  body.classList.toggle('open');
+}
+function toggleAll(){
+  const bodies = document.querySelectorAll('.slide-body');
+  const btn = document.querySelector('.expand-all-btn');
+  const anyOpen = [...bodies].some(b=>b.classList.contains('open'));
+  bodies.forEach(b=> anyOpen ? b.classList.remove('open') : b.classList.add('open'));
+  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
+}
+</script>
