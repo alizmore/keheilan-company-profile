@@ -624,14 +624,18 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ═══ MOBILE ═══ */
 @media (max-width: 768px) {
-  /* ── Root: simple lock, no position:fixed (causes grey box on iOS) ── */
-  html, body {
+  /* ── Root: dvh fills the real visible area on iOS (excludes address bar) ── */
+  html {
+    height: 100dvh;
     overflow: hidden;
+  }
+  body {
     height: 100%;
     width: 100%;
+    overflow: hidden;
   }
 
-  /* ── Slide container ── */
+  /* ── Slide container fills the full visible viewport ── */
   .slide-container {
     background: linear-gradient(180deg, var(--black) 0%, var(--firm-1) 100%);
     height: 100%;
@@ -703,7 +707,7 @@ input[type="range"]::-webkit-slider-thumb {
   .slide-counter { bottom: 70px !important; right: 50% !important; transform: translateX(50%); }
 
   /* ── Confidential footer: hide on mobile to save space ── */
-  .slide-container > div:last-of-type { display: none; }
+  .confidential-footer { display: none !important; }
 
   /* ── Mobile swipe nav: show the touch buttons ── */
   .mobile-nav {

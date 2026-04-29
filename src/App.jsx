@@ -879,8 +879,8 @@ function App() {
         {String(currentSlide + 1).padStart(2, '0')} / {String(slides.length).padStart(2, '0')}
       </div>
 
-      {/* Confidential footer — hidden on mobile via CSS */}
-      <div style={{ position: 'fixed', bottom: '32px', left: '44px', display: 'flex', flexDirection: 'column', gap: '3px', opacity: 0.5, zIndex: 100, pointerEvents: 'none' }}>
+      {/* Confidential footer — desktop only */}
+      <div className="confidential-footer" style={{ position: 'fixed', bottom: '32px', left: '44px', display: 'flex', flexDirection: 'column', gap: '3px', opacity: 0.5, zIndex: 100, pointerEvents: 'none' }}>
         <span style={{ fontSize: '9px', fontWeight: '600', letterSpacing: '0.18em', textTransform: 'uppercase' }}>PRIVATE & CONFIDENTIAL</span>
         <span style={{ fontSize: '8.5px', fontWeight: '300', letterSpacing: '0.08em' }}>AFM REGISTERED · NETHERLANDS</span>
       </div>
