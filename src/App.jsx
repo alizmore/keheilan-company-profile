@@ -109,29 +109,30 @@ const SeparatorSlide = ({ eyebrow, title, subtitle, badge, icon, accentColor = '
 // Slide indices (keep in sync with the array below):
 // 0  Keheilan Overview
 // 1  Mission & Philosophy
-// 2  Product Suite (clickable)
-// 3  KAIF Separator
-// 4  The Problem
-// 5  KAIF Architecture
-// 6  Intelligence Engine
-// 7  Performance
-// 8  Portfolio Composition
-// 9  Risk Faceoff
-// 10 Fund Structure
-// 11 Monthly Heatmap
-// 12 Investment Simulator
-// 13 VC Separator
-// 14 VC Details
-// 15 Sukuk Separator
-// 16 Sukuk Details
-// 17 Direct Indexing Separator
-// 18 Direct Indexing Details
-// 19 Closing
+// 2  Product Suite (3 categories)
+// 3  Who We Are
+// 4  KAIF Separator
+// 5  The Problem
+// 6  KAIF Architecture
+// 7  Intelligence Engine
+// 8  Performance
+// 9  Portfolio Composition
+// 10 Risk Faceoff
+// 11 Fund Structure
+// 12 Monthly Heatmap
+// 13 Investment Simulator
+// 14 VC Separator
+// 15 VC Details
+// 16 Sukuk Separator
+// 17 Sukuk Details
+// 18 Direct Indexing Separator
+// 19 Direct Indexing Details
+// 20 Closing
 
-const SLIDE_KAIF = 3;
-const SLIDE_VC   = 13;
-const SLIDE_SUKUK = 15;
-const SLIDE_DI   = 17;
+const SLIDE_KAIF  = 4;
+const SLIDE_VC    = 14;
+const SLIDE_SUKUK = 16;
+const SLIDE_DI    = 18;
 
 const slides = [
   // ── S00 · Keheilan Company Overview ──────────────────────────────────────
@@ -182,8 +183,11 @@ const slides = [
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
           <span className="eyebrow">OUR MISSION</span>
           <h1 className="slide-title">INTEGRITY AT THE<br /><span>CORE OF CAPITAL</span></h1>
-          <p className="slide-lead" style={{ marginBottom: '32px' }}>
+          <p className="slide-lead" style={{ marginBottom: '8px' }}>
             Keheilan Asset Management bridges cutting-edge AI with ethical finance. Every strategy we offer is grounded in Shariah compliance, transparency, and a commitment to creating lasting value for our partners.
+          </p>
+          <p style={{ fontSize: '13px', fontWeight: '500', color: '#ffce7b', opacity: 0.85, marginBottom: '32px', letterSpacing: '0.04em' }}>
+            Focused on MENA. Backing companies with a genuine technical edge.
           </p>
           <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
             {[
@@ -221,81 +225,162 @@ const slides = [
     ),
   },
 
-  // ── S02 · Product Suite (SPLIT + CLICKABLE) ───────────────────────────────
+  // ── S02 · Product Suite (3 categories: Public Equity, Private Equity, VC) ──
   {
     id: 's02-products',
     content: (
       <div className="max-w-6xl w-full">
-        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <span className="eyebrow">OUR PRODUCTS</span>
-          <h1 className="slide-title">A COMPLETE <span>INVESTMENT ECOSYSTEM</span></h1>
-          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>Click any product to jump to its section</p>
+          <h1 className="slide-title">THREE <span>INVESTMENT MANDATES</span></h1>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>Partnering with technically-driven MENA companies. Click to explore.</p>
         </div>
 
-        {/* ── Asset Management ── */}
-        <div style={{ marginBottom: '28px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
-            <span style={{ fontSize: '10px', fontWeight: '700', letterSpacing: '0.22em', color: '#ffce7b', textTransform: 'uppercase' }}>ASSET MANAGEMENT</span>
+        {/* ── Public Equity ── */}
+        <div style={{ marginBottom: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+            <span style={{ fontSize: '10px', fontWeight: '700', letterSpacing: '0.22em', color: '#ffce7b', textTransform: 'uppercase' }}>PUBLIC EQUITY</span>
             <div style={{ flex: 1, height: '1px', background: 'rgba(255,206,123,0.15)' }} />
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '14px' }}>
             {[
-              { icon: <Brain size={22} color="#ffce7b" />, name: 'KAIF', sub: 'Keheilan AI Fund', desc: 'AI-managed global equities. +40.70% FY1. Fully systematic, Shariah-screened.', badge: '+40.70% FY1', idx: SLIDE_KAIF },
-              { icon: <Landmark size={22} color="#ffce7b" />, name: 'Sukuk', sub: 'Shariah Fixed Income', desc: 'Islamic fixed-income instruments offering stable, riba-free returns with 4–6% target ROI.', badge: '4–6% Target ROI', idx: SLIDE_SUKUK },
-              { icon: <LineChart size={22} color="#ffce7b" />, name: 'Direct Indexing', sub: 'Personalized Portfolios', desc: 'Security-level index tracking tailored to your values, risk profile, and tax situation.', badge: 'Bespoke', idx: SLIDE_DI },
+              { icon: <Brain size={20} color="#ffce7b" />, name: 'KAIF', sub: 'Keheilan AI Fund', desc: 'AI-managed global equities. +40.70% FY1. Fully systematic, Shariah-screened.', badge: '+40.70% FY1', idx: SLIDE_KAIF },
+              { icon: <Landmark size={20} color="#ffce7b" />, name: 'Sukuk', sub: 'Shariah Fixed Income', desc: 'AI-optimized T-bill portfolio. 6% target yield. Riba-free.', badge: '6% Target ROI', idx: SLIDE_SUKUK },
+              { icon: <LineChart size={20} color="#ffce7b" />, name: 'Direct Indexing', sub: 'Personalized Portfolios', desc: 'Security-level index tracking tailored to your values and risk profile.', badge: 'Bespoke', idx: SLIDE_DI },
             ].map((p) => (
               <motion.div key={p.name}
                 whileHover={{ borderColor: 'rgba(255,206,123,0.55)', y: -3 }}
                 onClick={() => navigateRef.fn(p.idx)}
                 className="product-card"
-                style={{ cursor: 'pointer', padding: '22px 20px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
-                  <div style={{ background: 'rgba(255,206,123,0.1)', border: '1px solid rgba(255,206,123,0.2)', borderRadius: '10px', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{p.icon}</div>
-                  <ChevronRight size={16} color="rgba(255,206,123,0.4)" />
+                style={{ cursor: 'pointer', padding: '18px 18px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                  <div style={{ background: 'rgba(255,206,123,0.1)', border: '1px solid rgba(255,206,123,0.2)', borderRadius: '10px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{p.icon}</div>
+                  <ChevronRight size={14} color="rgba(255,206,123,0.4)" />
                 </div>
-                <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: '4px' }}>{p.sub}</p>
-                <div style={{ fontSize: '18px', fontWeight: '700', color: 'white', marginBottom: '8px' }}>{p.name}</div>
-                <div style={{ fontSize: '12px', fontWeight: '300', color: 'rgba(255,255,255,0.55)', lineHeight: 1.5, marginBottom: '12px' }}>{p.desc}</div>
+                <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: '3px' }}>{p.sub}</p>
+                <div style={{ fontSize: '16px', fontWeight: '700', color: 'white', marginBottom: '6px' }}>{p.name}</div>
+                <div style={{ fontSize: '11px', fontWeight: '300', color: 'rgba(255,255,255,0.55)', lineHeight: 1.45, marginBottom: '10px' }}>{p.desc}</div>
                 <span style={{ fontSize: '10px', fontWeight: '600', color: '#ffce7b', background: 'rgba(255,206,123,0.08)', border: '1px solid rgba(255,206,123,0.15)', padding: '3px 10px', borderRadius: '20px', display: 'inline-block' }}>{p.badge}</span>
               </motion.div>
             ))}
           </div>
         </div>
 
+        {/* ── Private Equity ── */}
+        <div style={{ marginBottom: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+            <span style={{ fontSize: '10px', fontWeight: '700', letterSpacing: '0.22em', color: '#ffce7b', textTransform: 'uppercase' }}>PRIVATE EQUITY</span>
+            <div style={{ flex: 1, height: '1px', background: 'rgba(255,206,123,0.15)' }} />
+          </div>
+          <motion.div
+            whileHover={{ borderColor: 'rgba(255,206,123,0.45)', y: -2 }}
+            className="product-card"
+            style={{ padding: '18px 24px', display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div style={{ background: 'rgba(255,206,123,0.08)', border: '1px solid rgba(255,206,123,0.2)', borderRadius: '12px', width: '44px', height: '44px', minWidth: '44px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Briefcase size={20} color="#ffce7b" />
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: '3px' }}>Direct Deals</p>
+              <div style={{ fontSize: '16px', fontWeight: '700', color: 'white', marginBottom: '4px' }}>Private Equity</div>
+              <div style={{ fontSize: '11px', fontWeight: '300', color: 'rgba(255,255,255,0.55)' }}>$1M to $20M deal size. Variety of sectors.</div>
+            </div>
+            <span style={{ fontSize: '10px', fontWeight: '600', color: '#ffce7b', background: 'rgba(255,206,123,0.08)', border: '1px solid rgba(255,206,123,0.15)', padding: '3px 10px', borderRadius: '20px', whiteSpace: 'nowrap' }}>$1M – $20M</span>
+          </motion.div>
+        </div>
+
         {/* ── Venture Capital ── */}
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
             <span style={{ fontSize: '10px', fontWeight: '700', letterSpacing: '0.22em', color: '#92d0c7', textTransform: 'uppercase' }}>VENTURE CAPITAL</span>
             <div style={{ flex: 1, height: '1px', background: 'rgba(146,208,199,0.15)' }} />
           </div>
-          <motion.div
-            whileHover={{ borderColor: 'rgba(146,208,199,0.5)', y: -3 }}
-            onClick={() => navigateRef.fn(SLIDE_VC)}
-            className="product-card"
-            style={{ cursor: 'pointer', padding: '22px 24px', borderColor: 'rgba(146,208,199,0.15)', display: 'flex', alignItems: 'center', gap: '24px' }}>
-            <div style={{ background: 'rgba(146,208,199,0.08)', border: '1px solid rgba(146,208,199,0.2)', borderRadius: '14px', width: '52px', height: '52px', minWidth: '52px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TrendingUp size={24} color="#92d0c7" />
-            </div>
-            <div style={{ flex: 1 }}>
-              <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: '4px' }}>Deep Tech Investments</p>
-              <div style={{ fontSize: '20px', fontWeight: '700', color: 'white', marginBottom: '6px' }}>Venture Capital</div>
-              <div style={{ fontSize: '13px', fontWeight: '300', color: 'rgba(255,255,255,0.55)', lineHeight: 1.5 }}>
-                Backing transformative companies in Arabic AI, deep tech, and sustainable technology across MENA. Portfolio: Remal, WideBot AI, Nawah, Fruitful.
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-              {['Remal', 'WideBot AI', 'Nawah', 'Fruitful'].map(c => (
-                <span key={c} style={{ fontSize: '10px', fontWeight: '600', color: '#92d0c7', background: 'rgba(146,208,199,0.08)', border: '1px solid rgba(146,208,199,0.15)', padding: '3px 10px', borderRadius: '20px' }}>{c}</span>
-              ))}
-            </div>
-            <ChevronRight size={18} color="rgba(146,208,199,0.4)" style={{ minWidth: 18 }} />
-          </motion.div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+            {[
+              { name: 'Pre-IPO Growth Stage Fund', sub: 'Late-stage companies approaching public markets', badge: 'PRE-IPO' },
+              { name: 'Deeptech Fund', sub: 'Arabic AI, industrial tech, sustainable innovation. MENA.', badge: 'DEEP TECH' },
+            ].map((vc) => (
+              <motion.div key={vc.name}
+                whileHover={{ borderColor: 'rgba(146,208,199,0.5)', y: -2 }}
+                onClick={() => navigateRef.fn(SLIDE_VC)}
+                className="product-card"
+                style={{ cursor: 'pointer', padding: '18px 20px', borderColor: 'rgba(146,208,199,0.15)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                  <div style={{ background: 'rgba(146,208,199,0.08)', border: '1px solid rgba(146,208,199,0.2)', borderRadius: '10px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <TrendingUp size={18} color="#92d0c7" />
+                  </div>
+                  <ChevronRight size={14} color="rgba(146,208,199,0.4)" />
+                </div>
+                <div style={{ fontSize: '15px', fontWeight: '700', color: 'white', marginBottom: '5px' }}>{vc.name}</div>
+                <div style={{ fontSize: '11px', fontWeight: '300', color: 'rgba(255,255,255,0.5)', lineHeight: 1.4, marginBottom: '10px' }}>{vc.sub}</div>
+                <span style={{ fontSize: '10px', fontWeight: '600', color: '#92d0c7', background: 'rgba(146,208,199,0.08)', border: '1px solid rgba(146,208,199,0.15)', padding: '3px 10px', borderRadius: '20px', display: 'inline-block' }}>{vc.badge}</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     ),
   },
 
-  // ── S03 · KAIF Separator ──────────────────────────────────────────────────
+  // ── S03 · Who We Are ─────────────────────────────────────────────────────
+  {
+    id: 's03-about',
+    content: (
+      <div className="flex flex-col items-center justify-center text-center" style={{ width: '100%' }}>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }}
+          style={{ background: 'rgba(0,0,0,0.45)', border: '1px solid rgba(255,206,123,0.18)', borderRadius: '32px',
+            padding: '52px 72px', backdropFilter: 'blur(28px)', position: 'relative', overflow: 'hidden',
+            maxWidth: '800px', width: '100%' }}>
+          <HeroPattern />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+              style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.3em', color: '#ffce7b', textTransform: 'uppercase', marginBottom: '14px' }}>
+              WHO WE ARE
+            </motion.p>
+            <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
+              style={{ fontSize: '38px', fontWeight: '700', color: 'white', letterSpacing: '0.04em', lineHeight: 1.15, marginBottom: '8px' }}>
+              KEHEILAN<br /><span style={{ color: '#ffce7b' }}>ASSET MANAGEMENT</span>
+            </motion.h1>
+            <motion.div initial={{ width: 0 }} animate={{ width: '64px' }} transition={{ delay: 0.65 }}
+              style={{ height: '1.5px', background: 'linear-gradient(90deg, transparent, #ffce7b, transparent)', margin: '18px auto' }} />
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75 }}
+              style={{ fontSize: '14px', fontWeight: '300', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, marginBottom: '28px', maxWidth: '480px', margin: '0 auto 28px' }}>
+              A multi-strategy, Shariah-compliant investment firm serving institutions, family offices, and HNWIs.
+            </motion.p>
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }}
+              style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '28px' }}>
+              {[
+                { label: '6', sub: 'FUNDS' },
+                { label: '$50M', sub: 'AUM' },
+                { label: 'AFM', sub: 'REGULATED' },
+              ].map((stat, i) => (
+                <div key={i} style={{ textAlign: 'center', padding: '16px 28px', background: 'rgba(255,206,123,0.06)', border: '1px solid rgba(255,206,123,0.18)', borderRadius: '14px', minWidth: '100px' }}>
+                  <p style={{ fontSize: '26px', fontWeight: '800', color: '#ffce7b', lineHeight: 1, marginBottom: '4px' }}>{stat.label}</p>
+                  <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.16em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>{stat.sub}</p>
+                </div>
+              ))}
+            </motion.div>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.05 }}>
+              <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: '10px' }}>OFFICES</p>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                {[
+                  { city: 'Cairo', country: 'Egypt' },
+                  { city: 'Riyadh', country: 'Saudi Arabia' },
+                  { city: 'Amsterdam', country: 'Netherlands' },
+                ].map((loc) => (
+                  <span key={loc.city} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '12px', fontWeight: '500', color: 'rgba(255,255,255,0.75)', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', padding: '6px 14px', borderRadius: '20px' }}>
+                    <Globe size={12} color="rgba(255,206,123,0.7)" />
+                    {loc.city}, {loc.country}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+    ),
+  },
+
+  // ── S04 · KAIF Separator ──────────────────────────────────────────────────
   {
     id: 's03-kaif-sep',
     content: <SeparatorSlide
@@ -618,53 +703,77 @@ const slides = [
     id: 's14-vc',
     content: (
       <div className="max-w-6xl w-full">
-        <div style={{ marginBottom: '36px' }}>
+        <div style={{ marginBottom: '24px' }}>
           <span className="eyebrow" style={{ color: '#92d0c7' }}>KEHEILAN VENTURE CAPITAL</span>
           <h1 className="slide-title">BACKING THE FUTURE OF<br /><span style={{ color: '#92d0c7' }}>DEEP TECHNOLOGY</span></h1>
-          <p className="slide-lead">
-            We invest in innovative companies building scalable, technology-driven solutions — providing capital, mentorship, and strategic guidance from seed to scale.
+          <p className="slide-lead" style={{ marginBottom: 0 }}>
+            Capital, mentorship, and strategic guidance for MENA's most technically ambitious founders.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '20px' }}>
+
+        {/* Key metrics row */}
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+          style={{ display: 'flex', gap: '14px', marginBottom: '24px', flexWrap: 'wrap' }}>
+          {[
+            { label: '$3.5M', sub: 'Invested' },
+            { label: '$10M', sub: 'Current Value' },
+            { label: '2.86x', sub: 'Return' },
+            { label: '4', sub: 'Portfolio Companies' },
+          ].map((m, i) => (
+            <div key={i} style={{ textAlign: 'center', padding: '12px 20px', background: 'rgba(146,208,199,0.06)', border: '1px solid rgba(146,208,199,0.2)', borderRadius: '12px', flex: '1', minWidth: '100px' }}>
+              <p style={{ fontSize: '22px', fontWeight: '800', color: '#92d0c7', lineHeight: 1, marginBottom: '4px' }}>{m.label}</p>
+              <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>{m.sub}</p>
+            </div>
+          ))}
+        </motion.div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '16px' }}>
           {[
             {
               name: 'Remal',
               tag: 'PropTech / Real Estate',
-              desc: 'Digitizing the real estate experience across MENA, making property transactions faster, smarter, and more accessible.',
+              logo: '/logos/remal.png',
+              desc: 'Digitizing real estate transactions across MENA.',
             },
             {
               name: 'WideBot AI',
               tag: 'Arabic AI Platform',
-              detail: '$3M Pre-Series A · Feb 2025',
-              desc: 'Pioneering Arabic-language conversational AI. Supports data sovereignty and regional tech growth across the Arab world.',
+              logo: '/logos/widebot.png',
+              detail: '$3M Pre-Series A',
+              desc: 'Pioneering Arabic-language conversational AI across the Arab world.',
             },
             {
               name: 'Nawah',
               tag: 'EdTech / Scientific Research',
-              desc: 'Empowering scientific research and education in the Arab world with accessible, advanced research infrastructure.',
+              logo: '/logos/Nawah.png',
+              desc: 'Advanced research infrastructure for Arab-world scientists and educators.',
             },
             {
               name: 'Fruitful',
               tag: 'AgriTech / FoodTech',
-              desc: 'Transforming food supply chains with technology-driven agricultural solutions for a sustainable future.',
+              logo: '/logos/fruitful.jpeg',
+              desc: 'Technology-driven food supply chains for a sustainable future.',
             },
           ].map((co, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i }}
               className="portfolio-card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '10px' }}>
                 <div>
-                  <h3 style={{ fontSize: '20px', fontWeight: '700', marginBottom: '5px' }}>{co.name}</h3>
+                  <h3 style={{ fontSize: '18px', fontWeight: '700', marginBottom: '5px' }}>{co.name}</h3>
                   <span style={{ fontSize: '10px', fontWeight: '600', color: '#92d0c7', background: 'rgba(146,208,199,0.08)', border: '1px solid rgba(146,208,199,0.15)', padding: '3px 10px', borderRadius: '20px' }}>{co.tag}</span>
                 </div>
-                {co.detail && <span style={{ fontSize: '11px', color: '#ffce7b', opacity: 0.85, textAlign: 'right', lineHeight: 1.4 }}>{co.detail}</span>}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
+                  <img src={co.logo} alt={co.name} style={{ height: '28px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+                  {co.detail && <span style={{ fontSize: '10px', color: '#ffce7b', opacity: 0.85 }}>{co.detail}</span>}
+                </div>
               </div>
-              <p style={{ fontSize: '13px', fontWeight: '300', opacity: 0.65, lineHeight: 1.6, marginTop: '10px' }}>{co.desc}</p>
+              <p style={{ fontSize: '12px', fontWeight: '300', opacity: 0.65, lineHeight: 1.5, marginTop: '8px' }}>{co.desc}</p>
             </motion.div>
           ))}
         </div>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-          className="quote-pill" style={{ marginTop: '24px' }}>
-          <span style={{ color: '#92d0c7', fontWeight: '600', fontSize: '10px', letterSpacing: '0.12em', display: 'block', marginBottom: '6px' }}>DR. AHMED ABDELHAMID — FOUNDER & GROUP CEO</span>
+          className="quote-pill" style={{ marginTop: '20px' }}>
+          <span style={{ color: '#92d0c7', fontWeight: '600', fontSize: '10px', letterSpacing: '0.12em', display: 'block', marginBottom: '6px' }}>DR. AHMED ABDELHAMID, FOUNDER AND GROUP CEO</span>
           "The future of economic development in the region hinges on supporting deep technology companies."
         </motion.div>
       </div>
@@ -688,51 +797,51 @@ const slides = [
     id: 's16-sukuk',
     content: (
       <div className="max-w-6xl w-full">
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <span className="eyebrow">KEHEILAN SUKUK</span>
           <h1 className="slide-title">FIXED INCOME.<br /><span>WITHOUT COMPROMISE.</span></h1>
           <p className="slide-lead" style={{ margin: '0 auto' }}>
-            Keheilan Sukuk offers Shariah-conscious investors access to institutional-grade fixed income — stable returns anchored in real assets, free from interest.
+            AI-optimized sovereign T-bill portfolio. Risk-free rate. Shariah-compliant.
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
-          {/* Left: Key attributes */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+          {/* Left: How It Works */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {[
-              { icon: <ShieldCheck size={20} color="#ffce7b" />, title: 'Shariah-Compliant', desc: 'Every instrument is structured and certified to be fully free from riba (interest) and prohibited activities.' },
-              { icon: <Target size={20} color="#ffce7b" />, title: 'Benchmark Target ROI: 4–6% p.a.', desc: 'Competitive fixed-income returns benchmarked at 4 to 6 percent per annum, derived from real asset performance.' },
-              { icon: <Layers size={20} color="#ffce7b" />, title: 'Asset-Backed Security', desc: 'Instruments are tied to tangible, productive assets — providing a clear link between your return and real economic activity.' },
-              { icon: <Globe size={20} color="#ffce7b" />, title: 'Institutional Access', desc: 'Accessible to corporations, family offices, and HNWIs seeking fixed-income exposure within an ethical framework.' },
+              { icon: <Globe size={20} color="#ffce7b" />, title: '18 Countries', desc: 'Sovereign loan sourcing across 18 jurisdictions' },
+              { icon: <Layers size={20} color="#ffce7b" />, title: 'T-Bill Mix', desc: '1yr, 3yr, 15yr, 20yr maturities blended for optimal yield' },
+              { icon: <Brain size={20} color="#ffce7b" />, title: 'AI-Managed Weights', desc: 'Allocation adjusted by algorithm. No human bias.' },
+              { icon: <ShieldCheck size={20} color="#ffce7b" />, title: 'Risk-Free Anchor', desc: 'Structured as the most secure, risk-free rate available' },
             ].map((item, i) => (
-              <motion.div key={i} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.12 * i }}
-                style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', padding: '16px 18px', background: 'rgba(255,206,123,0.04)', border: '1px solid rgba(255,206,123,0.1)', borderRadius: '12px' }}>
-                <div style={{ background: 'rgba(255,206,123,0.1)', width: '38px', height: '38px', minWidth: '38px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{item.icon}</div>
+              <motion.div key={i} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
+                style={{ display: 'flex', gap: '14px', alignItems: 'center', padding: '14px 16px', background: 'rgba(255,206,123,0.04)', border: '1px solid rgba(255,206,123,0.1)', borderRadius: '12px' }}>
+                <div style={{ background: 'rgba(255,206,123,0.1)', width: '36px', height: '36px', minWidth: '36px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{item.icon}</div>
                 <div>
-                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '4px' }}>{item.title}</h4>
-                  <p style={{ fontSize: '12px', fontWeight: '300', opacity: 0.65, lineHeight: 1.5 }}>{item.desc}</p>
+                  <h4 style={{ fontSize: '14px', fontWeight: '700', marginBottom: '2px' }}>{item.title}</h4>
+                  <p style={{ fontSize: '12px', fontWeight: '300', opacity: 0.6, lineHeight: 1.4 }}>{item.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Right: ROI highlight + audience */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Right: Target return + audience */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }}
-              style={{ background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(255,206,123,0.25)', borderRadius: '20px', padding: '32px', textAlign: 'center', flex: 1 }}>
-              <p style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '16px' }}>BENCHMARK TARGET ROI</p>
-              <div style={{ fontSize: '80px', fontWeight: '800', color: '#ffce7b', lineHeight: 1, marginBottom: '8px', textShadow: '0 0 60px rgba(255,206,123,0.3)' }}>4–6%</div>
-              <p style={{ fontSize: '14px', fontWeight: '300', color: 'rgba(255,255,255,0.6)' }}>per annum</p>
-              <div style={{ marginTop: '24px', padding: '14px', background: 'rgba(255,206,123,0.06)', borderRadius: '10px', border: '1px solid rgba(255,206,123,0.1)' }}>
-                <p style={{ fontSize: '13px', fontWeight: '300', color: 'rgba(255,255,255,0.75)', lineHeight: 1.6 }}>
-                  Returns derived from real asset performance — <span style={{ color: '#ffce7b', fontWeight: '600' }}>never from interest</span>.
+              style={{ background: 'rgba(0,0,0,0.35)', border: '1px solid rgba(255,206,123,0.25)', borderRadius: '20px', padding: '28px', textAlign: 'center', flex: 1 }}>
+              <p style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '12px' }}>TARGET YIELD</p>
+              <div style={{ fontSize: '80px', fontWeight: '800', color: '#ffce7b', lineHeight: 1, marginBottom: '6px', textShadow: '0 0 60px rgba(255,206,123,0.3)' }}>6%</div>
+              <p style={{ fontSize: '13px', fontWeight: '300', color: 'rgba(255,255,255,0.55)', marginBottom: '16px' }}>per annum</p>
+              <div style={{ padding: '12px', background: 'rgba(255,206,123,0.06)', borderRadius: '10px', border: '1px solid rgba(255,206,123,0.1)' }}>
+                <p style={{ fontSize: '12px', fontWeight: '400', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
+                  Blended yield via <span style={{ color: '#ffce7b', fontWeight: '600' }}>AI-optimized</span> T-bill weighting
                 </p>
               </div>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
-              className="glass-card" style={{ padding: '22px 24px' }}>
-              <p style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '12px' }}>DESIGNED FOR</p>
+              className="glass-card" style={{ padding: '18px 20px' }}>
+              <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '10px' }}>DESIGNED FOR</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {['Shariah-Conscious Investors', 'Family Offices', 'Corporations', 'HNWIs', 'Fund Managers'].map(a => (
                   <span key={a} className="pill" style={{ fontSize: '11px' }}>{a}</span>
