@@ -247,23 +247,26 @@ const slides = [
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '14px' }}>
             {[
-              { icon: <Brain size={20} color="#ffce7b" />, name: 'KAIF', sub: 'Keheilan AI Fund', desc: 'AI-managed global equities. +40.70% FY1. Fully systematic, Shariah-screened.', badge: '+40.70% FY1', idx: SLIDE_KAIF },
-              { icon: <Landmark size={20} color="#ffce7b" />, name: 'Sukuk', sub: 'Shariah Fixed Income', desc: 'AI-optimized T-bill portfolio. 6% target yield. Riba-free.', badge: '6% Target ROI', idx: SLIDE_SUKUK },
-              { icon: <LineChart size={20} color="#ffce7b" />, name: 'Direct Indexing', sub: 'Personalized Portfolios', desc: 'Security-level index tracking tailored to your values and risk profile.', badge: 'Bespoke', idx: SLIDE_DI },
+              { icon: <Brain size={20} color="#ffce7b" />, name: 'KAIF', sub: 'Keheilan AI Fund', desc: 'AI-managed global equities. Fully systematic, Shariah-screened.', ret: '+40%', retLabel: 'FY1 RETURN', idx: SLIDE_KAIF },
+              { icon: <Landmark size={20} color="#ffce7b" />, name: 'Sukuk', sub: 'Shariah Fixed Income', desc: 'AI-optimized T-bill portfolio. Riba-free.', ret: '6%', retLabel: 'TARGET YIELD', idx: SLIDE_SUKUK },
+              { icon: <LineChart size={20} color="#ffce7b" />, name: 'Direct Indexing', sub: 'Personalized Portfolios', desc: 'Security-level index tracking tailored to your values and risk profile.', ret: 'Bespoke', retLabel: 'CUSTOM FIT', idx: SLIDE_DI },
             ].map((p) => (
               <motion.div key={p.name}
                 whileHover={{ borderColor: 'rgba(255,206,123,0.55)', y: -3 }}
                 onClick={() => navigateRef.fn(p.idx)}
                 className="product-card"
-                style={{ cursor: 'pointer', padding: '18px 18px' }}>
+                style={{ cursor: 'pointer', padding: '18px 18px', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
                   <div style={{ background: 'rgba(255,206,123,0.1)', border: '1px solid rgba(255,206,123,0.2)', borderRadius: '10px', width: '36px', height: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{p.icon}</div>
                   <ChevronRight size={14} color="rgba(255,206,123,0.4)" />
                 </div>
                 <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', marginBottom: '3px' }}>{p.sub}</p>
                 <div style={{ fontSize: '16px', fontWeight: '700', color: 'white', marginBottom: '6px' }}>{p.name}</div>
-                <div style={{ fontSize: '11px', fontWeight: '300', color: 'rgba(255,255,255,0.55)', lineHeight: 1.45, marginBottom: '10px' }}>{p.desc}</div>
-                <span style={{ fontSize: '10px', fontWeight: '600', color: '#ffce7b', background: 'rgba(255,206,123,0.08)', border: '1px solid rgba(255,206,123,0.15)', padding: '3px 10px', borderRadius: '20px', display: 'inline-block' }}>{p.badge}</span>
+                <div style={{ fontSize: '11px', fontWeight: '300', color: 'rgba(255,255,255,0.55)', lineHeight: 1.45, marginBottom: '12px', flex: 1 }}>{p.desc}</div>
+                <div style={{ borderTop: '1px solid rgba(255,206,123,0.1)', paddingTop: '10px', display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                  <span style={{ fontSize: '28px', fontWeight: '800', color: '#ffce7b', lineHeight: 1, textShadow: '0 0 20px rgba(255,206,123,0.35)' }}>{p.ret}</span>
+                  <span style={{ fontSize: '9px', fontWeight: '600', letterSpacing: '0.14em', color: 'rgba(255,206,123,0.5)', textTransform: 'uppercase' }}>{p.retLabel}</span>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -722,7 +725,6 @@ const slides = [
             { label: '$3.5M', sub: 'Invested', highlight: false },
             { label: '$10M', sub: 'Current Value', highlight: false },
             { label: '2.86x', sub: 'Unrealized Return', highlight: true },
-            { label: '4', sub: 'Portfolio Companies', highlight: false },
           ].map((m, i) => (
             <div key={i} style={{
               textAlign: 'center', padding: '12px 20px', flex: '1', minWidth: '100px', borderRadius: '12px',
@@ -771,7 +773,7 @@ const slides = [
                   <span style={{ fontSize: '10px', fontWeight: '600', color: '#92d0c7', background: 'rgba(146,208,199,0.08)', border: '1px solid rgba(146,208,199,0.15)', padding: '3px 10px', borderRadius: '20px' }}>{co.tag}</span>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '6px' }}>
-                  <img src={co.logo} alt={co.name} style={{ maxHeight: '32px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 1px 4px rgba(0,0,0,0.5))', opacity: 0.9 }} />
+                  <img src={co.logo} alt={co.name} style={{ maxHeight: '52px', width: 'auto', objectFit: 'contain', filter: 'drop-shadow(0 1px 6px rgba(0,0,0,0.6))', opacity: 0.92 }} />
                   {co.detail && <span style={{ fontSize: '10px', color: '#ffce7b', opacity: 0.85 }}>{co.detail}</span>}
                 </div>
               </div>
@@ -804,7 +806,7 @@ const slides = [
           <span className="eyebrow">KEHEILAN PRIVATE EQUITY</span>
           <h1 className="slide-title">DIRECT EQUITY.<br /><span>HANDS-ON GROWTH.</span></h1>
           <p className="slide-lead" style={{ marginBottom: 0 }}>
-            Direct investments into high-potential private companies across MENA.
+            Direct investments into high-potential private companies. Worldwide opportunity mapping.
           </p>
         </div>
 
@@ -815,7 +817,7 @@ const slides = [
               { icon: <TrendingUp size={20} color="#ffce7b" />, title: '$1M – $20M', sub: 'Deal Size', desc: 'Flexible ticket size across growth stages' },
               { icon: <Layers size={20} color="#ffce7b" />, title: 'Multi-Sector', sub: 'Focus', desc: 'Technology, healthcare, fintech, consumer' },
               { icon: <Users size={20} color="#ffce7b" />, title: 'Hands-On', sub: 'Approach', desc: 'Board seats, strategic guidance, network access' },
-              { icon: <Globe size={20} color="#ffce7b" />, title: 'MENA Focus', sub: 'Geography', desc: 'Primary focus on Middle East and North Africa' },
+              { icon: <Globe size={20} color="#ffce7b" />, title: 'Global', sub: 'Reach', desc: 'Worldwide opportunity mapping across emerging and developed markets' },
             ].map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -14 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 * i }}
                 style={{ display: 'flex', gap: '14px', alignItems: 'center', padding: '14px 16px', background: 'rgba(255,206,123,0.04)', border: '1px solid rgba(255,206,123,0.1)', borderRadius: '12px' }}>
@@ -846,7 +848,7 @@ const slides = [
               className="glass-card" style={{ padding: '18px 20px' }}>
               <p style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', marginBottom: '10px' }}>INVESTMENT CRITERIA</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {['Shariah-Compliant', 'Growth Stage', 'Proven Revenue', 'MENA Based'].map(a => (
+                {['Shariah-Compliant', 'Growth Stage', 'Proven Revenue', 'Global'].map(a => (
                   <span key={a} className="pill" style={{ fontSize: '11px' }}>{a}</span>
                 ))}
               </div>
